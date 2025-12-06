@@ -247,10 +247,420 @@
     <script src="https://accounts.google.com/gsi/client"></script>
     
     <style>
+        /* リッチUIUX - モダンデザインシステム */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --card-shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             -webkit-touch-callout: none;
             -webkit-tap-highlight-color: transparent;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            transition: background 0.3s ease;
+        }
+
+        /* グラスモーフィズム効果 */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--card-shadow-hover);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* リッチなカードデザイン */
+        .rich-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .rich-card:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        /* モダンなボタンスタイル */
+        .btn-modern {
+            background: var(--primary-gradient);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 12px 24px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-modern::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-modern:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-modern:active {
+            transform: translateY(0);
+        }
+
+        /* スムーズなアニメーション */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        /* 入力フィールドのリッチデザイン */
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        textarea,
+        select {
+            transition: all 0.3s ease;
+            border-radius: 10px;
+            border: 2px solid #e5e7eb;
+        }
+
+        input[type="text"]:focus,
+        input[type="date"]:focus,
+        input[type="number"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+            transform: scale(1.01);
+        }
+
+        /* タスクカードのリッチデザイン */
+        .task-card-modern {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-left: 4px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .task-card-modern::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--primary-gradient);
+            transition: width 0.3s ease;
+        }
+
+        .task-card-modern:hover {
+            transform: translateX(4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .task-card-modern:hover::before {
+            width: 6px;
+        }
+
+        /* 優先度別のボーダーカラー */
+        .task-card-modern.priority-high {
+            border-left-color: #ef4444;
+        }
+
+        .task-card-modern.priority-medium {
+            border-left-color: #f59e0b;
+        }
+
+        .task-card-modern.priority-low {
+            border-left-color: #10b981;
+        }
+
+        /* ステータスバッジのリッチデザイン */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .status-badge:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* フローティングボタンのリッチデザイン */
+        .floating-btn-rich {
+            background: var(--primary-gradient);
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .floating-btn-rich:hover {
+            transform: scale(1.1) rotate(90deg);
+            box-shadow: 0 12px 24px rgba(102, 126, 234, 0.5);
+        }
+
+        .floating-btn-rich:active {
+            transform: scale(0.95) rotate(90deg);
+        }
+
+        /* モーダルのリッチデザイン */
+        .modal-rich {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        .modal-content-rich {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modalSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        /* 担当者モーダルの専用スタイル */
+        #member-modal > div {
+            animation: modalSlideIn 0.2s ease-out;
+        }
+        
+        #member-modal form {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(156, 163, 175, 0.3) transparent;
+        }
+        
+        #member-modal form::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #member-modal form::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        #member-modal form::-webkit-scrollbar-thumb {
+            background: rgba(156, 163, 175, 0.3);
+            border-radius: 10px;
+        }
+        
+        #member-modal form::-webkit-scrollbar-thumb:hover {
+            background: rgba(156, 163, 175, 0.5);
+        }
+        
+        /* 担当者モーダルのレスポンシブ対応 */
+        @media screen and (max-width: 640px) {
+            #member-modal > div {
+                width: 95%;
+                max-width: 95%;
+                max-height: 95vh;
+                margin: 2.5vh auto;
+            }
+            
+            #member-modal form {
+                padding: 1rem 1.25rem;
+            }
+            
+            #member-modal .grid.grid-cols-1.sm\\:grid-cols-2 {
+                grid-template-columns: 1fr !important;
+                gap: 1rem !important;
+            }
+            
+            #member-modal input,
+            #member-modal textarea {
+                font-size: 16px !important; /* iOSのズーム防止 */
+                min-height: 42px !important;
+                padding: 10px 16px !important;
+                border-radius: 8px !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
+            }
+            
+            #member-modal .space-y-6 > * + * {
+                margin-top: 1.5rem;
+            }
+        }
+        
+        @media screen and (min-width: 641px) and (max-width: 1024px) {
+            #member-modal > div {
+                max-width: 600px;
+                width: 85%;
+            }
+        }
+
+        /* プログレスバーのリッチデザイン */
+        .progress-bar-rich {
+            height: 8px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar-rich::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        /* タブのリッチデザイン */
+        .tab-rich {
+            position: relative;
+            transition: all 0.3s ease;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .tab-rich.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 3px;
+            background: var(--primary-gradient);
+            border-radius: 3px 3px 0 0;
+        }
+
+        /* ホバーエフェクトの強化 */
+        .hover-lift {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        /* スムーズなスクロール */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* カスタムスクロールバーのリッチデザイン */
+        .custom-scrollbar-rich::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar-rich::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar-rich::-webkit-scrollbar-thumb {
+            background: var(--primary-gradient);
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar-rich::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
         }
 
         /* ボタンとクリック可能な要素のみ選択を無効化 */
@@ -272,10 +682,245 @@
             height: 200px;
         }
 
-        /* 入力フィールドの最大幅 */
+        /* 入力フィールドの最大幅 - リッチ版 */
         .input-max-width {
             max-width: 100%;
             box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        /* すべてのボタンにリッチなスタイルを適用 - 担当者モーダルを除外 */
+        button:not(.ios-tap):not(.timer-btn):not(.floating-btn-rich):not(#member-modal button) {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+        }
+        
+        button:not(.ios-tap):not(.timer-btn):not(.floating-btn-rich):not(#member-modal button):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        button:not(.ios-tap):not(.timer-btn):not(.floating-btn-rich):not(#member-modal button):active {
+            transform: translateY(0);
+        }
+        
+        /* プライマリボタンのリッチスタイル */
+        button.bg-blue-500:not(#member-modal button),
+        button.bg-blue-600:not(#member-modal button) {
+            background: var(--primary-gradient) !important;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4) !important;
+        }
+        
+        button.bg-blue-500:not(#member-modal button):hover,
+        button.bg-blue-600:not(#member-modal button):hover {
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.5) !important;
+        }
+        
+        /* 担当者モーダルのボタンスタイルを保護 - 最高優先度 */
+        #member-modal button {
+            transition: all 0.2s ease !important;
+            transform: none !important;
+        }
+        
+        #member-modal button.bg-blue-600,
+        #member-modal button[type="submit"] {
+            background: #2563eb !important;
+            background-color: #2563eb !important;
+            color: white !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        #member-modal button.bg-blue-600:hover,
+        #member-modal button[type="submit"]:hover {
+            background: #1d4ed8 !important;
+            background-color: #1d4ed8 !important;
+            color: white !important;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1) !important;
+            transform: none !important;
+        }
+        
+        #member-modal button.bg-white,
+        #member-modal button#cancel-member-btn {
+            background: white !important;
+            background-color: white !important;
+            color: #374151 !important;
+        }
+        
+        #member-modal button.bg-white:hover,
+        #member-modal button#cancel-member-btn:hover {
+            background: #f9fafb !important;
+            background-color: #f9fafb !important;
+            transform: none !important;
+        }
+        
+        /* 担当者モーダルの入力フィールドの色を明示的に設定 - 最高優先度で強制 */
+        #member-modal #member-name,
+        #member-modal #member-email,
+        #member-modal #member-phone,
+        #member-modal #member-notes,
+        #member-modal input[type="text"],
+        #member-modal input[type="email"],
+        #member-modal input[type="tel"],
+        #member-modal textarea {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827 !important;
+            caret-color: #111827 !important;
+        }
+        
+        #member-modal #member-name::placeholder,
+        #member-modal #member-email::placeholder,
+        #member-modal #member-phone::placeholder,
+        #member-modal #member-notes::placeholder,
+        #member-modal input[type="text"]::placeholder,
+        #member-modal input[type="email"]::placeholder,
+        #member-modal input[type="tel"]::placeholder,
+        #member-modal textarea::placeholder {
+            color: #9ca3af !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: #9ca3af !important;
+        }
+        
+        #member-modal #member-name:focus,
+        #member-modal #member-email:focus,
+        #member-modal #member-phone:focus,
+        #member-modal #member-notes:focus,
+        #member-modal input[type="text"]:focus,
+        #member-modal input[type="email"]:focus,
+        #member-modal input[type="tel"]:focus,
+        #member-modal textarea:focus {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827 !important;
+            caret-color: #111827 !important;
+        }
+        
+        /* モバイル用スタイルでも色を強制 */
+        @media screen and (max-width: 640px) {
+            #member-modal #member-name,
+            #member-modal #member-email,
+            #member-modal #member-phone,
+            #member-modal #member-notes,
+            #member-modal input[type="text"],
+            #member-modal input[type="email"],
+            #member-modal input[type="tel"],
+            #member-modal textarea {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
+                caret-color: #111827 !important;
+            }
+        }
+        
+        /* すべてのメディアクエリで強制 */
+        @media screen and (min-width: 641px) {
+            #member-modal #member-name,
+            #member-modal #member-email,
+            #member-modal #member-phone,
+            #member-modal #member-notes {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
+            }
+        }
+        
+        /* タスクモーダルと顧客モーダルの入力フィールドの色を明示的に設定 */
+        #task-modal input[type="text"],
+        #task-modal input[type="date"],
+        #task-modal input[type="datetime-local"],
+        #task-modal input[type="number"],
+        #task-modal input[type="email"],
+        #task-modal input[type="tel"],
+        #task-modal select,
+        #task-modal select[multiple],
+        #task-modal textarea,
+        #client-modal input[type="text"],
+        #client-modal input[type="email"],
+        #client-modal input[type="tel"],
+        #client-modal select,
+        #client-modal textarea {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827 !important;
+            caret-color: #111827 !important;
+        }
+        
+        #task-modal input::placeholder,
+        #task-modal textarea::placeholder,
+        #client-modal input::placeholder,
+        #client-modal textarea::placeholder {
+            color: #9ca3af !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: #9ca3af !important;
+        }
+        
+        #task-modal input:focus,
+        #task-modal textarea:focus,
+        #task-modal select:focus,
+        #client-modal input:focus,
+        #client-modal textarea:focus,
+        #client-modal select:focus {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            color: #111827 !important;
+            -webkit-text-fill-color: #111827 !important;
+            caret-color: #111827 !important;
+        }
+        
+        /* タスクモーダルと顧客モーダルのボタンスタイル */
+        #task-modal button.bg-blue-600,
+        #task-modal button[type="submit"],
+        #client-modal button.bg-blue-600,
+        #client-modal button[type="submit"] {
+            background: #2563eb !important;
+            background-color: #2563eb !important;
+            color: white !important;
+        }
+        
+        #task-modal button.bg-blue-600:hover,
+        #task-modal button[type="submit"]:hover,
+        #client-modal button.bg-blue-600:hover,
+        #client-modal button[type="submit"]:hover {
+            background: #1d4ed8 !important;
+            background-color: #1d4ed8 !important;
+            color: white !important;
+        }
+        
+        #task-modal button.bg-white,
+        #task-modal button[id*="cancel"],
+        #client-modal button.bg-white,
+        #client-modal button[id*="cancel"] {
+            background: white !important;
+            background-color: white !important;
+            color: #374151 !important;
+        }
+        
+        #task-modal button.bg-white:hover,
+        #task-modal button[id*="cancel"]:hover,
+        #client-modal button.bg-white:hover,
+        #client-modal button[id*="cancel"]:hover {
+            background: #f9fafb !important;
+            background-color: #f9fafb !important;
+        }
+        
+        /* モバイル用スタイルでも色を強制 */
+        @media screen and (max-width: 640px) {
+            #task-modal input,
+            #task-modal textarea,
+            #task-modal select,
+            #client-modal input,
+            #client-modal textarea,
+            #client-modal select {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
+            }
         }
 
         /* 顧客モーダルの初期スタイル（JavaScriptで動的に上書きされる） */
@@ -286,62 +931,135 @@
             width: 330px;
         }
         
-        /* iOS風のボタンエフェクト */
+        /* iOS風のボタンエフェクト - リッチ版 */
         .ios-tap {
-            transition: all 0.1s ease;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+        
+        .ios-tap::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.4s, height 0.4s;
+        }
+        
+        .ios-tap:active::before {
+            width: 200px;
+            height: 200px;
         }
         
         .ios-tap:active {
-            transform: scale(0.95);
-            opacity: 0.8;
+            transform: scale(0.96);
+            opacity: 0.9;
         }
         
-        /* カスタムスクロールバー（iOS風） */
+        /* カスタムスクロールバー（iOS風） - リッチ版 */
         .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
+            width: 6px;
         }
         
         .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
         }
         
         .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            transition: background 0.3s ease;
         }
         
-        /* フローティングアクションボタンのパルス効果 */
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+        
+        /* フローティングアクションボタンのパルス効果 - リッチ版 */
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+            0% { 
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7),
+                            0 0 0 0 rgba(118, 75, 162, 0.7);
+            }
+            50% { 
+                box-shadow: 0 0 0 10px rgba(102, 126, 234, 0),
+                            0 0 0 20px rgba(118, 75, 162, 0);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0),
+                            0 0 0 0 rgba(118, 75, 162, 0);
+            }
         }
         
         .pulse-effect {
             animation: pulse 2s infinite;
         }
         
-        /* 日付入力フィールドのカスタマイズ */
-        input[type="date"]::-webkit-calendar-picker-indicator {
-            opacity: 0.6;
+        /* リッチなパルス効果 */
+        @keyframes pulse-rich {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 15px rgba(102, 126, 234, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(102, 126, 234, 0);
+            }
         }
         
-        /* チェックボックスのカスタマイズ */
+        .pulse-effect-rich {
+            animation: pulse-rich 2s infinite;
+        }
+        
+        /* 日付入力フィールドのカスタマイズ - リッチ版 */
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            opacity: 0.6;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+        }
+        
+        input[type="date"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+        
+        input[type="date"]:focus {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
+        
+        /* チェックボックスのカスタマイズ - リッチ版 */
         .custom-checkbox {
             appearance: none;
             width: 24px;
             height: 24px;
             border: 2px solid #d1d5db;
-            border-radius: 6px;
+            border-radius: 8px;
             background: white;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             margin-top: 6px;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .custom-checkbox:hover {
+            border-color: #667eea;
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
         }
         
         .custom-checkbox:checked {
-            background: #3B82F6;
-            border-color: #3B82F6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
         }
         
         .custom-checkbox:checked::after {
@@ -353,33 +1071,296 @@
             align-items: center;
             justify-content: center;
             height: 100%;
+            animation: checkmark 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        /* タブスタイル */
+        @keyframes checkmark {
+            0% {
+                transform: scale(0) rotate(-45deg);
+            }
+            50% {
+                transform: scale(1.2) rotate(5deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        /* タブスタイル - リッチ版 */
+        .tab-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            background: rgba(255, 255, 255, 0.9) !important;
+            color: #6b7280 !important;
+            border-radius: 12px 12px 0 0;
+        }
+        
         .tab-button.active {
-            border-bottom-color: #3B82F6 !important;
-            color: #3B82F6 !important;
+            border-bottom-color: #667eea !important;
+            color: #667eea !important;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 1) !important;
         }
         
-        /* 時間計測ボタン */
+        .tab-button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px 3px 0 0;
+        }
+        
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 1) !important;
+            color: #667eea !important;
+        }
+        
+        /* 非アクティブなタブボタンのテキストとアイコンを明るく */
+        .tab-button:not(.active) {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:not(.active) i {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:not(.active) span {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:hover:not(.active) i,
+        .tab-button:hover:not(.active) span {
+            color: #667eea !important;
+        }
+        
+        /* Tailwindクラスを上書きして非アクティブなタブボタンを明るく */
+        .tab-button.text-gray-500 {
+            color: #6b7280 !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+        }
+        
+        .tab-button.text-gray-500 i {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button.text-gray-500 span {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button.text-gray-500:hover {
+            color: #667eea !important;
+            background: rgba(255, 255, 255, 1) !important;
+        }
+        
+        .tab-button.text-gray-500:hover i,
+        .tab-button.text-gray-500:hover span {
+            color: #667eea !important;
+        }
+        
+        /* アクティブなタブボタンのスタイル */
+        .tab-button.active.text-gray-500 {
+            color: #667eea !important;
+            background: rgba(255, 255, 255, 1) !important;
+        }
+        
+        .tab-button.active.text-gray-500 i {
+            color: #667eea !important;
+        }
+        
+        .tab-button.active.text-gray-500 span {
+            color: #667eea !important;
+        }
+        
+        /* フィルター選択状態の視覚的強調 */
+        .filter-select {
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .filter-select.filter-active {
+            border-color: #667eea !important;
+            background: linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%) !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+        }
+        
+        /* フィルターバッジ（ボックス内表示） */
+        .filter-badge {
+            display: inline-flex;
+            align-items: center;
+            white-space: nowrap;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .filter-badge i {
+            font-size: 9px;
+            flex-shrink: 0;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        /* セレクトボックスの右側にスペースを確保（バッジとドロップダウン矢印のため） */
+        .filter-select.filter-active {
+            padding-right: 120px !important;
+        }
+        
+        /* バッジの位置調整 */
+        #filter-status-indicator,
+        #filter-priority-indicator,
+        #filter-client-indicator {
+            right: 32px; /* ドロップダウン矢印の左側に配置 */
+        }
+        
+        /* バッジのテキストが長い場合の処理 */
+        .filter-badge span {
+            max-width: 80px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            display: inline-block;
+        }
+        
+        /* 時間計測ボタン - リッチ版 */
         .timer-btn {
-            transition: all 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timer-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .timer-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .timer-btn {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        .timer-btn:hover {
+            background-color: #f9fafb !important;
+            background: #f9fafb !important;
+            border-color: #9ca3af !important;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
         }
         
         .timer-btn.running {
-            background: #EF4444;
-            color: white;
-            animation: pulse-red 2s infinite;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+            background-color: #ef4444 !important;
+            color: white !important;
+            animation: pulse-red-rich 2s infinite;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
         }
         
         .timer-btn.running:hover {
-            background: #DC2626;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+            background-color: #dc2626 !important;
+            color: white !important;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.5);
         }
         
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        .timer-btn.paused {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            border: 1px solid #f59e0b !important;
+            box-shadow: 0 1px 2px 0 rgba(245, 158, 11, 0.2) !important;
+        }
+        
+        .timer-btn.paused:hover {
+            background-color: #fef3c7 !important;
+            background: #fef3c7 !important;
+            border-color: #f59e0b !important;
+            box-shadow: 0 2px 4px 0 rgba(245, 158, 11, 0.3) !important;
+        }
+        
+        /* タスクアクションボタンの背景色を設定 */
+        .task-actions button {
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        .task-actions button:hover {
+            background-color: #f3f4f6 !important;
+            background: #f3f4f6 !important;
+            border-color: #9ca3af !important;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
+        }
+        
+        /* 編集ボタンのアイコン色 */
+        .task-actions button .fa-edit {
+            color: #4b5563 !important;
+        }
+        
+        /* 削除ボタンのアイコン色 */
+        .task-actions button .fa-trash {
+            color: #dc2626 !important;
+        }
+        
+        /* タイマーボタンのアイコン色 */
+        .task-actions button .fa-play {
+            color: #2563eb !important;
+        }
+        
+        .task-actions button .fa-pause {
+            color: #f59e0b !important;
+        }
+        
+        .task-actions button .fa-stop {
+            color: #dc2626 !important;
+        }
+        
+        /* 実行中のタイマーボタンのアイコンは白 */
+        .task-actions .timer-btn.running .fa-stop,
+        .task-actions .timer-btn.running i {
+            color: white !important;
+        }
+        
+        @keyframes pulse-red-rich {
+            0% { 
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7),
+                            0 4px 15px rgba(239, 68, 68, 0.4);
+            }
+            50% { 
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0),
+                            0 6px 20px rgba(239, 68, 68, 0.5);
+            }
+            100% { 
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0),
+                            0 4px 15px rgba(239, 68, 68, 0.4);
+            }
         }
 
         /* Toggle Switch スタイル */
@@ -408,9 +1389,10 @@
             right: 0;
             bottom: 0;
             background-color: #d1d5db;
-            -webkit-transition: .3s;
-            transition: .3s;
+            -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 20px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .toggle-slider:before {
@@ -420,30 +1402,37 @@
             width: 16px;
             left: 2px;
             bottom: 2px;
-            background-color: white;
-            -webkit-transition: .3s;
-            transition: .3s;
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+            -webkit-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         input:checked + .toggle-switch .toggle-slider {
-            background-color: #3b82f6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
         }
 
         input:focus + .toggle-switch .toggle-slider {
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
         }
 
         input:checked + .toggle-switch .toggle-slider:before {
-            -webkit-transform: translateX(20px);
-            -ms-transform: translateX(20px);
-            transform: translateX(20px);
+            -webkit-transform: translateX(20px) scale(1.1);
+            -ms-transform: translateX(20px) scale(1.1);
+            transform: translateX(20px) scale(1.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
         }
 
-        /* ホバーエフェクト */
+        /* ホバーエフェクト - リッチ版 */
         .toggle-switch:hover .toggle-slider {
             background-color: #9ca3af;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        
+        input:checked + .toggle-switch:hover .toggle-slider {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
         }
         
         /* モバイル端末でのチェックボックス表示問題を防ぐ追加設定 */
@@ -725,9 +1714,7 @@
             }
         }
 
-        input:checked + .toggle-switch:hover .toggle-slider {
-            background-color: #2563eb;
-        }
+        /* この部分は上で既に更新済み */
         
         /* 無効状態のトグルスイッチ */
         .toggle-switch.disabled {
@@ -743,16 +1730,22 @@
             background-color: #f3f4f6 !important;
         }
         
-        /* ガントチャートスタイル */
+        /* ガントチャートスタイル - リッチ版 */
         .gantt-container {
             position: relative;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
             background: white;
             height: 600px;
             min-height: 400px;
             overflow: hidden;
             z-index: 1;
+            box-shadow: var(--card-shadow);
+            transition: box-shadow 0.3s ease;
+        }
+        
+        .gantt-container:hover {
+            box-shadow: var(--card-shadow-hover);
         }
 
         .gantt-wrapper {
@@ -828,7 +1821,7 @@
         }
         
         /* PC表示でのチェックボックス調整 */
-        input[type="checkbox"] {
+        input[type="checkbox"]:not(.related-task-checkbox) {
             width: 16px !important;
             height: 16px !important;
             margin-right: 6px !important;
@@ -847,10 +1840,32 @@
             z-index: 10;
         }
         
-        /* 統計カードのz-indexを優先し、一般的なカードは低く設定 */
+        /* 統計カードのz-indexを優先し、一般的なカードは低く設定 - リッチ版 */
         .bg-white.rounded-lg.shadow-sm.border:not(.stats-card) {
             position: relative;
             z-index: 3;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+        }
+        
+        .bg-white.rounded-lg.shadow-sm.border:not(.stats-card):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        }
+        
+        /* すべてのカード要素にリッチなスタイルを適用 */
+        .bg-white.rounded-lg {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .bg-white.rounded-lg.shadow-xl {
+            box-shadow: var(--card-shadow) !important;
+        }
+        
+        .bg-white.rounded-lg.shadow-xl:hover {
+            box-shadow: var(--card-shadow-hover) !important;
+            transform: translateY(-2px);
         }
         
         /* モバイル対応のガントチャート */
@@ -1140,44 +2155,81 @@
         
         .gantt-task-bar {
             height: 18px;
-            background: #3b82f6;
-            border-radius: 0; /* 境界線を滑らかにするため角丸を無効化 */
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
             font-size: 9px;
             color: white;
             padding: 0 2px;
-            margin: 1px 0; /* 左右のマージンを除去して連続表示 */
+            margin: 1px 0;
             display: flex;
             align-items: center;
             justify-content: flex-start;
             cursor: pointer;
-            transition: background-color 0.2s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            width: 100%; /* セル幅全体を使用 */
+            width: 100%;
             box-sizing: border-box;
-            border: none; /* 境界線を除去 */
+            border: none;
+            box-shadow: 0 2px 4px rgba(102, 126, 234, 0.3);
+            position: relative;
+        }
+        
+        .gantt-task-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .gantt-task-bar:hover::before {
+            left: 100%;
         }
         
         .gantt-task-bar:hover {
-            background: #2563eb;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(102, 126, 234, 0.4);
         }
         
         .gantt-task-bar.high-priority {
-            background: #ef4444;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
         }
         
         .gantt-task-bar.high-priority:hover {
-            background: #dc2626;
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+            box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
         }
         
         .gantt-task-bar.completed {
-            background: #10b981;
-            opacity: 0.8;
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            opacity: 0.9;
+            box-shadow: 0 2px 4px rgba(16, 185, 129, 0.3);
         }
         
         .gantt-task-bar.completed:hover {
-            background: #059669;
+            background: linear-gradient(135deg, #059669 0%, #047857 100%);
+            opacity: 1;
+            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.4);
+        }
+        
+        /* 開始日時が期日を超えている場合の警告スタイル */
+        .gantt-task-bar.overdue-warning {
+            background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%) !important;
+            border: 2px solid #f59e0b !important;
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+        
+        .gantt-task-bar.overdue-warning:hover {
+            background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%) !important;
+            border: 2px solid #d97706 !important;
+            box-shadow: 0 4px 8px rgba(245, 158, 11, 0.4);
         }
         
         .gantt-wrapper {
@@ -1209,14 +2261,36 @@
             }
         }
         
-        /* タブボタンの改善 */
+        /* タブボタンの改善 - リッチ版 */
         .tab-button {
-            transition: all 0.2s ease;
-            border-radius: 8px 8px 0 0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 12px 12px 0 0;
             position: relative;
             cursor: pointer;
             width: 100%;
             height: 100%;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.9) !important;
+            color: #6b7280 !important;
+            -webkit-user-select: none;
+            user-select: none;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+            touch-action: manipulation;
+        }
+        
+        .tab-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .tab-button:hover::before {
+            left: 100%;
         }
         
         /* ボタン内の要素がクリックを阻害しないように */
@@ -1224,24 +2298,35 @@
             pointer-events: none;
         }
         
-        /* タブボタンのクリック領域を確実に設定 */
-        .tab-button {
-            position: relative;
-            cursor: pointer;
-            -webkit-user-select: none;
-            user-select: none;
-            -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
-            touch-action: manipulation;
-        }
-        
         .tab-button:active {
             transform: scale(0.95);
-            background-color: rgba(59, 130, 246, 0.1);
         }
         
         .tab-button.active {
-            background-color: rgba(59, 130, 246, 0.05);
+            background-color: rgba(255, 255, 255, 1) !important;
             border-bottom-width: 3px !important;
+        }
+        
+        /* 非アクティブなタブボタンのテキストとアイコンを明るく */
+        .tab-button:not(.active) {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:not(.active) i {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:not(.active) span {
+            color: #6b7280 !important;
+        }
+        
+        .tab-button:hover:not(.active) {
+            background: rgba(255, 255, 255, 1) !important;
+        }
+        
+        .tab-button:hover:not(.active) i,
+        .tab-button:hover:not(.active) span {
+            color: #667eea !important;
         }
         
         /* デスクトップ・タブレット表示での調整 */
@@ -1564,6 +2649,34 @@
             --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free";
             font-family: 'Inter', sans-serif;
             -webkit-tap-highlight-color: transparent;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .stats-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stats-card:hover::before {
+            transform: scaleX(1);
+        }
             --tw-border-spacing-x: 0;
             --tw-border-spacing-y: 0;
             --tw-translate-x: 0;
@@ -2207,21 +3320,87 @@
                 border-radius: 6px !important;
                 flex-shrink: 0;
                 min-width: 32px;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border: 1px solid #d1d5db !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+            }
+            
+            .task-actions button:hover {
+                background-color: #f3f4f6 !important;
+                background: #f3f4f6 !important;
+                border-color: #9ca3af !important;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
             }
             
             /* タイマーボタンの特別調整 */
             .task-actions .timer-btn {
-                border-width: 2px !important;
+                border-width: 1px !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border-color: #d1d5db !important;
+                box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+            }
+            
+            .task-actions .timer-btn:hover {
+                background-color: #f3f4f6 !important;
+                background: #f3f4f6 !important;
+                border-color: #9ca3af !important;
+                box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1) !important;
             }
             
             .task-actions .timer-btn.running {
-                background-color: #fef2f2 !important;
+                background-color: #ef4444 !important;
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
                 border-color: #ef4444 !important;
+                color: white !important;
+                box-shadow: 0 2px 4px 0 rgba(239, 68, 68, 0.3) !important;
+            }
+            
+            .task-actions .timer-btn.running:hover {
+                background-color: #dc2626 !important;
+                background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+                box-shadow: 0 4px 6px 0 rgba(239, 68, 68, 0.4) !important;
             }
             
             .task-actions .timer-btn.paused {
-                background-color: #fef3c7 !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
                 border-color: #f59e0b !important;
+                box-shadow: 0 1px 2px 0 rgba(245, 158, 11, 0.2) !important;
+            }
+            
+            .task-actions .timer-btn.paused:hover {
+                background-color: #fef3c7 !important;
+                background: #fef3c7 !important;
+                border-color: #f59e0b !important;
+                box-shadow: 0 2px 4px 0 rgba(245, 158, 11, 0.3) !important;
+            }
+            
+            /* アイコンの色を明示的に設定 */
+            .task-actions button .fa-edit {
+                color: #4b5563 !important;
+            }
+            
+            .task-actions button .fa-trash {
+                color: #dc2626 !important;
+            }
+            
+            .task-actions button .fa-play {
+                color: #2563eb !important;
+            }
+            
+            .task-actions button .fa-pause {
+                color: #f59e0b !important;
+            }
+            
+            .task-actions button .fa-stop {
+                color: #dc2626 !important;
+            }
+            
+            .task-actions .timer-btn.running .fa-stop,
+            .task-actions .timer-btn.running i {
+                color: white !important;
             }
             
             /* 予想時間・実績時間 */
@@ -2304,6 +3483,25 @@
                 font-size: 10px !important;
                 min-width: 24px !important;
                 border-radius: 4px !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                border-color: #d1d5db !important;
+            }
+            
+            .task-actions button:hover {
+                background-color: #f9fafb !important;
+                background: #f9fafb !important;
+            }
+            
+            .task-actions .timer-btn.running {
+                background-color: #ef4444 !important;
+                background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+                color: white !important;
+            }
+            
+            .task-actions .timer-btn.paused {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
             }
             
             /* モーダルのボタン調整 */
@@ -2319,16 +3517,29 @@
                 min-height: 44px; /* タッチフレンドリーな最小タップ領域 */
             }
             
-            /* フォーム入力要素のモバイル最適化 */
-            input[type="text"], input[type="date"], input[type="datetime-local"], 
-            input[type="number"], input[type="email"], input[type="tel"], 
-            select, textarea {
+            /* フォーム入力要素のモバイル最適化 - 担当者モーダルを完全除外 */
+            input[type="text"]:not(#member-name):not(#member-email):not(#member-phone):not(#member-modal input), 
+            input[type="date"], input[type="datetime-local"], 
+            input[type="number"], 
+            input[type="email"]:not(#member-email):not(#member-modal input), 
+            input[type="tel"]:not(#member-phone):not(#member-modal input), 
+            select:not(#task-member):not(#member-modal select), 
+            textarea:not(#member-notes):not(#member-modal textarea) {
                 font-size: 16px !important; /* iOSズーム防止 */
                 min-height: 44px !important; /* タッチフレンドリーな高さ */
                 padding: 12px 16px !important; /* より大きなタッチ領域 */
                 border-radius: 8px !important; /* 見やすい角丸 */
                 -webkit-appearance: none !important; /* iOS独自スタイル無効化 */
                 appearance: none !important;
+            }
+            
+            /* 担当者モーダルの入力フィールドは除外して色を強制 */
+            #member-modal input,
+            #member-modal textarea {
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
             }
             
             /* 🔧 モーダル完全最適化 - オーバーフロー問題完全解決 */
@@ -2480,7 +3691,7 @@
             }
             
             /* フォーム要素のデフォルトスタイル調整 */
-            #task-modal form, #client-modal form {
+            #task-modal form, #client-modal form, #member-modal form {
                 margin: 0 !important;
             }
             
@@ -2632,23 +3843,33 @@
             }
             
             /* フォーム要素の幅を確実に制御 */
-            #task-modal form, #client-modal form {
+            #task-modal form, #client-modal form, #member-modal form {
                 width: 100% !important;
                 box-sizing: border-box !important;
             }
             
             #task-modal input, #task-modal select, #task-modal textarea,
-            #client-modal input, #client-modal select, #client-modal textarea {
+            #client-modal input, #client-modal select, #client-modal textarea,
+            #member-modal input, #member-modal select, #member-modal textarea {
                 box-sizing: border-box !important;
                 min-height: 42px !important;
+                background-color: #ffffff !important;
+                background: #ffffff !important;
+                color: #111827 !important;
+                -webkit-text-fill-color: #111827 !important;
             }
             
             /* モバイル表示では100%幅 */
             @media screen and (max-width: 768px) {
                 #task-modal input, #task-modal select, #task-modal textarea,
-                #client-modal input, #client-modal select, #client-modal textarea {
+                #client-modal input, #client-modal select, #client-modal textarea,
+                #member-modal input, #member-modal select, #member-modal textarea {
                     width: 100% !important;
                     max-width: 100% !important;
+                    background-color: #ffffff !important;
+                    background: #ffffff !important;
+                    color: #111827 !important;
+                    -webkit-text-fill-color: #111827 !important;
                 }
             }
             
@@ -3147,7 +4368,7 @@
                 }
                 
                 /* チェックボックスのサイズ調整 */
-                input[type="checkbox"] {
+                input[type="checkbox"]:not(.related-task-checkbox) {
                     width: 16px !important;
                     height: 16px !important;
                     margin-right: 6px !important;
@@ -3159,6 +4380,100 @@
                     height: 14px !important;
                 }
             }
+        
+        /* 関連タスクドロップダウンのチェックボックス専用スタイル - 最高優先度 */
+        #related-tasks-dropdown input[type="checkbox"].related-task-checkbox,
+        #related-tasks-dropdown .related-task-checkbox,
+        input.related-task-checkbox {
+            appearance: none !important;
+            -webkit-appearance: none !important;
+            -moz-appearance: none !important;
+            width: 16px !important;
+            height: 16px !important;
+            min-width: 16px !important;
+            min-height: 16px !important;
+            max-width: 16px !important;
+            max-height: 16px !important;
+            border: 1.5px solid #9ca3af !important;
+            border-radius: 3px !important;
+            background-color: #ffffff !important;
+            cursor: pointer !important;
+            transition: all 0.2s ease !important;
+            position: relative !important;
+            flex-shrink: 0 !important;
+            margin-right: 10px !important;
+            margin-top: 2px !important;
+            margin-left: 0 !important;
+            margin-bottom: 0 !important;
+            padding: 0 !important;
+            box-sizing: border-box !important;
+        }
+        
+        #related-tasks-dropdown input[type="checkbox"].related-task-checkbox:hover,
+        #related-tasks-dropdown .related-task-checkbox:hover,
+        input.related-task-checkbox:hover {
+            border-color: #2563eb !important;
+            background-color: #eff6ff !important;
+        }
+        
+        #related-tasks-dropdown input[type="checkbox"].related-task-checkbox:checked,
+        #related-tasks-dropdown .related-task-checkbox:checked,
+        input.related-task-checkbox:checked {
+            background-color: #2563eb !important;
+            border-color: #2563eb !important;
+        }
+        
+        #related-tasks-dropdown input[type="checkbox"].related-task-checkbox:checked::after,
+        #related-tasks-dropdown .related-task-checkbox:checked::after,
+        input.related-task-checkbox:checked::after {
+            content: '✓' !important;
+            position: absolute !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            color: #ffffff !important;
+            font-size: 11px !important;
+            font-weight: bold !important;
+            line-height: 1 !important;
+            display: block !important;
+        }
+        
+        #related-tasks-dropdown input[type="checkbox"].related-task-checkbox:focus,
+        #related-tasks-dropdown .related-task-checkbox:focus,
+        input.related-task-checkbox:focus {
+            outline: none !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.3) !important;
+        }
+        
+        /* 関連タスクドロップダウンのテキスト視認性向上 */
+        #related-tasks-dropdown label {
+            background-color: #ffffff !important;
+        }
+        
+        #related-tasks-dropdown label:hover {
+            background-color: #eff6ff !important;
+        }
+        
+        #related-tasks-dropdown label.bg-blue-50 {
+            background-color: #dbeafe !important;
+        }
+        
+        #related-tasks-dropdown label span {
+            color: #111827 !important;
+            font-size: 15px !important;
+            font-weight: 500 !important;
+            line-height: 1.6 !important;
+            letter-spacing: 0.01em !important;
+        }
+        
+        #related-tasks-dropdown label.bg-blue-50 span {
+            color: #1e40af !important;
+            font-weight: 600 !important;
+        }
+        
+        #related-tasks-dropdown label:hover span {
+            color: #1e3a8a !important;
+        }
         
         /* 超小画面（320px以下）での調整 */
         @media screen and (max-width: 360px) {
@@ -3306,6 +4621,28 @@
             padding-right: 36px !important;
         }
         
+        /* 複数選択可能なselectのスタイル */
+        select[multiple] {
+            display: block !important;
+            overflow-y: auto !important;
+            background-image: none !important;
+            padding-right: 12px !important;
+            -webkit-appearance: listbox !important;
+            -moz-appearance: listbox !important;
+            appearance: listbox !important;
+        }
+        
+        /* 関連タスク選択用の非表示select（データ保存用のみ） */
+        #task-related-tasks {
+            display: none !important;
+            visibility: hidden !important;
+            position: absolute !important;
+            width: 0 !important;
+            height: 0 !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+        
         /* タスクフィルターのレスポンシブ調整 */
         @media screen and (max-width: 640px) {
             #tasks-view .grid {
@@ -3425,7 +4762,7 @@
                 <!-- フィルター・検索エリア -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 sm:p-6 mb-6">
                     <!-- 統一されたグリッドレイアウト -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
                         <!-- 検索フィールド -->
                         <div>
                             <label for="search-input" class="block text-sm font-medium text-gray-700 mb-2">タスク検索</label>
@@ -3434,34 +4771,70 @@
                         </div>
                         
                         <!-- ステータスフィルター -->
-                        <div>
+                        <div class="relative">
                             <label for="filter-status" class="block text-sm font-medium text-gray-700 mb-2">ステータス</label>
-                            <select id="filter-status" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-                                <option value="">全ステータス</option>
-                                <option value="active">未着手と進行中のみ</option>
-                                <option value="pending">未着手</option>
-                                <option value="in_progress">進行中</option>
-                                <option value="completed">完了</option>
-                            </select>
+                            <div class="relative">
+                                <select id="filter-status" class="w-full px-3 py-2 pr-20 text-sm border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white filter-select">
+                                    <option value="">全ステータス</option>
+                                    <option value="active">未着手と進行中のみ</option>
+                                    <option value="pending">未着手</option>
+                                    <option value="in_progress">進行中</option>
+                                    <option value="completed">完了</option>
+                                </select>
+                                <div id="filter-status-indicator" class="absolute right-10 top-1/2 transform -translate-y-1/2 flex items-center pointer-events-none">
+                                    <span id="filter-status-badge" class="filter-badge hidden px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-700 border border-blue-300">
+                                        <i class="fas fa-filter text-xs mr-1"></i><span id="filter-status-text"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- 優先度フィルター -->
-                        <div>
+                        <div class="relative">
                             <label for="filter-priority" class="block text-sm font-medium text-gray-700 mb-2">優先度</label>
-                            <select id="filter-priority" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-                                <option value="">全優先度</option>
-                                <option value="high">高</option>
-                                <option value="medium">中</option>
-                                <option value="low">低</option>
-                            </select>
+                            <div class="relative">
+                                <select id="filter-priority" class="w-full px-3 py-2 pr-20 text-sm border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white filter-select">
+                                    <option value="" selected>全優先度</option>
+                                    <option value="high">高</option>
+                                    <option value="medium">中</option>
+                                    <option value="low">低</option>
+                                </select>
+                                <div id="filter-priority-indicator" class="absolute right-10 top-1/2 transform -translate-y-1/2 flex items-center pointer-events-none">
+                                    <span id="filter-priority-badge" class="filter-badge hidden px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-700 border border-blue-300">
+                                        <i class="fas fa-filter text-xs mr-1"></i><span id="filter-priority-text"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                         
                         <!-- 顧客フィルター -->
-                        <div>
+                        <div class="relative">
                             <label for="filter-client" class="block text-sm font-medium text-gray-700 mb-2">顧客</label>
-                            <select id="filter-client" class="w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
-                                <option value="">全顧客</option>
-                            </select>
+                            <div class="relative">
+                                <select id="filter-client" class="w-full px-3 py-2 pr-20 text-sm border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white filter-select">
+                                    <option value="" selected>全顧客</option>
+                                </select>
+                                <div id="filter-client-indicator" class="absolute right-10 top-1/2 transform -translate-y-1/2 flex items-center pointer-events-none">
+                                    <span id="filter-client-badge" class="filter-badge hidden px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-700 border border-blue-300">
+                                        <i class="fas fa-filter text-xs mr-1"></i><span id="filter-client-text"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 担当者フィルター -->
+                        <div class="relative">
+                            <label for="filter-member" class="block text-sm font-medium text-gray-700 mb-2">担当者</label>
+                            <div class="relative">
+                                <select id="filter-member" class="w-full px-3 py-2 pr-20 text-sm border-2 border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white filter-select">
+                                    <option value="" selected>全担当者</option>
+                                </select>
+                                <div id="filter-member-indicator" class="absolute right-10 top-1/2 transform -translate-y-1/2 flex items-center pointer-events-none">
+                                    <span id="filter-member-badge" class="filter-badge hidden px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-700 border border-blue-300">
+                                        <i class="fas fa-filter text-xs mr-1"></i><span id="filter-member-text"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3937,6 +5310,36 @@
 
 
 
+                <!-- 担当者管理 -->
+                <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6 mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">担当者管理</h3>
+                        <button id="add-member-btn" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg flex items-center gap-2 ios-tap">
+                            <i class="fas fa-plus"></i>新規担当者
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">名前</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">メール</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">タスク数</th>
+                                    <th class="px-4 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="members-table-body" class="bg-white divide-y divide-gray-200">
+                                <!-- 担当者がここに動的に表示される -->
+                            </tbody>
+                        </table>
+                        <div id="members-empty-state" class="hidden text-center py-12 text-gray-500">
+                            <i class="fas fa-users text-4xl mb-4"></i>
+                            <p class="text-lg">担当者が登録されていません</p>
+                            <p class="text-sm">新規担当者を追加してください</p>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- データ管理 -->
                 <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-4">データ管理</h3>
@@ -3956,6 +5359,75 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- 担当者編集モーダル -->
+    <div id="member-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden" onclick="if(event.target === this) app.closeMemberModal()">
+        <div class="bg-white rounded-lg shadow-2xl max-w-md w-full mx-4 overflow-hidden">
+            <!-- ヘッダー -->
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 id="member-modal-title" class="text-xl font-semibold text-gray-800">新しい担当者</h3>
+                    <button id="close-member-modal" class="text-gray-400 hover:text-gray-600 transition-colors" aria-label="モーダルを閉じる">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- フォーム -->
+            <form id="member-form" class="px-6 py-5">
+                <input type="hidden" id="member-id">
+                
+                <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                    <!-- 名前 -->
+                    <div>
+                        <label for="member-name" class="block text-sm font-medium text-gray-700 mb-2">
+                            名前 <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" id="member-name" required
+                               class="w-full box-border px-4 py-2.5 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all placeholder-gray-400">
+                    </div>
+                    
+                    <!-- メールアドレスと電話番号 -->
+                    <div class="grid grid-cols-2" style="gap: 1rem;">
+                        <div class="min-w-0">
+                            <label for="member-email" class="block text-sm font-medium text-gray-700 mb-2">
+                                メールアドレス
+                            </label>
+                            <input type="email" id="member-email"
+                                   class="w-full box-border px-4 py-2.5 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all placeholder-gray-400">
+                        </div>
+                        
+                        <div class="min-w-0">
+                            <label for="member-phone" class="block text-sm font-medium text-gray-700 mb-2">
+                                電話番号
+                            </label>
+                            <input type="tel" id="member-phone"
+                                   class="w-full box-border px-4 py-2.5 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all placeholder-gray-400">
+                        </div>
+                    </div>
+                    
+                    <!-- メモ -->
+                    <div>
+                        <label for="member-notes" class="block text-sm font-medium text-gray-700 mb-2">
+                            メモ
+                        </label>
+                        <textarea id="member-notes" rows="4"
+                                  class="w-full box-border px-4 py-2.5 bg-white text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all resize-none placeholder-gray-400"></textarea>
+                    </div>
+                </div>
+                
+                <!-- ボタン -->
+                <div class="flex justify-end gap-3 mt-6 pt-5 border-t border-gray-200">
+                    <button type="button" id="cancel-member-btn" class="px-5 py-2.5 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors font-medium whitespace-nowrap" style="background-color: white !important; color: #374151 !important;">
+                        キャンセル
+                    </button>
+                    <button type="submit" form="member-form" class="px-5 py-2.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-sm hover:shadow whitespace-nowrap" style="background-color: #2563eb !important; color: white !important;">
+                        保存
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -4014,6 +5486,41 @@
                                 <option value="">顧客を選択</option>
                             </select>
                         </div>
+                    </div>
+                    
+                    <!-- 担当者を追加 -->
+                    <div>
+                        <label for="task-member" class="block text-sm font-medium text-gray-700 mb-1">担当者</label>
+                        <select id="task-member"
+                                class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">担当者を選択</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 関連タスクを追加 -->
+                    <div>
+                        <label for="related-tasks-toggle" class="block text-sm font-medium text-gray-700 mb-1">関連タスク</label>
+                        <!-- 選択ボタンとドロップダウン -->
+                        <div class="relative">
+                            <button type="button" id="related-tasks-toggle" 
+                                    class="w-full px-3 py-2 border border-gray-300 rounded-md bg-white text-left flex items-center justify-between hover:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                                    style="min-height: 42px;">
+                                <span id="related-tasks-button-text" class="text-gray-700">関連タスクを選択</span>
+                                <i class="fas fa-chevron-down text-gray-400 text-xs"></i>
+                            </button>
+                            <!-- ドロップダウンリスト -->
+                            <div id="related-tasks-dropdown" class="hidden absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-xl max-h-60 overflow-y-auto">
+                                <div class="p-0">
+                                    <div id="related-tasks-list" class="divide-y divide-gray-100">
+                                        <!-- 選択肢はJavaScriptで動的に追加 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 非表示のselect（データ保存用） -->
+                        <select id="task-related-tasks" multiple style="display: none !important; visibility: hidden !important; position: absolute !important; width: 0 !important; height: 0 !important; opacity: 0 !important; pointer-events: none !important;">
+                        </select>
+                        <p class="text-xs text-gray-500 mt-1">複数のタスクを選択できます</p>
                     </div>
                     
                     <div>
@@ -4195,12 +5702,14 @@
             constructor() {
                 this.tasks = JSON.parse(localStorage.getItem('taskflow_tasks') || '[]');
                 this.clients = JSON.parse(localStorage.getItem('taskflow_clients') || '[]');
+                this.members = JSON.parse(localStorage.getItem('taskflow_members') || '[]');
                 this.subtasks = JSON.parse(localStorage.getItem('taskflow_subtasks') || '[]');
                 this.timeLogs = JSON.parse(localStorage.getItem('taskflow_time_logs') || '[]');
                 this.settings = JSON.parse(localStorage.getItem('taskflow_settings') || '{}');
                 
                 this.currentEditingTask = null;
                 this.currentEditingClient = null;
+                this.currentEditingMember = null;
                 this.currentTab = 'tasks';
                 this.ganttCurrentDate = new Date();
                 
@@ -4301,6 +5810,12 @@
                     this.addDemoLongNameTasks();
                 }
                 
+                // フィルターのデフォルト値を設定
+                const filterStatus = document.getElementById('filter-status');
+                if (filterStatus && !filterStatus.value) {
+                    filterStatus.value = 'active';
+                }
+                
                 this.renderTasks();
                 this.loadSettings();
                 this.startTimerUpdates();
@@ -4308,7 +5823,12 @@
                 // 🔥 Firebase初期化（設定の有無に関わらず実行）
                 setTimeout(() => this.initializeFirebase(), 1000);
                 
-                // 初期化完了
+                // 初期化完了後にフィルターインジケーターを更新
+                setTimeout(() => {
+                    if (typeof this.updateFilterIndicators === 'function') {
+                        this.updateFilterIndicators();
+                    }
+                }, 100);
             }
             
             // 🔥 Firebase同期機能
@@ -4544,6 +6064,7 @@
                     const userData = {
                         tasks: this.tasks,
                         clients: this.clients,
+                        members: this.members,
                         subtasks: this.subtasks,
                         timeLogs: this.timeLogs,
                         settings: this.settings,
@@ -4601,6 +6122,7 @@
                     const beforeCount = {
                         tasks: this.tasks?.length || 0,
                         clients: this.clients?.length || 0,
+                        members: this.members?.length || 0,
                         subtasks: this.subtasks?.length || 0,
                         timeLogs: this.timeLogs?.length || 0
                     };
@@ -4618,6 +6140,13 @@
                         console.log('✅ 顧客データ更新:', `${beforeCount.clients} → ${this.clients.length}件`);
                     } else {
                         console.log('⚠️ Firebaseに顧客データなし');
+                    }
+                    
+                    if (firebaseData.members) {
+                        this.members = firebaseData.members;
+                        console.log('✅ 担当者データ更新:', `${beforeCount.members || 0} → ${this.members.length}件`);
+                    } else {
+                        console.log('⚠️ Firebaseに担当者データなし');
                     }
                     
                     if (firebaseData.subtasks) {
@@ -5248,6 +6777,7 @@
                         await Promise.all([
                             this.syncTable('tasks', this.tasks),
                             this.syncTable('clients', this.clients),
+                            this.syncTable('members', this.members),
                             this.syncTable('subtasks', this.subtasks),
                             this.syncTable('time_logs', this.timeLogs)
                         ]);
@@ -5323,6 +6853,10 @@
                     case 'clients':
                         this.clients = data;
                         localStorage.setItem('taskflow_clients', JSON.stringify(this.clients));
+                        break;
+                    case 'members':
+                        this.members = data;
+                        localStorage.setItem('taskflow_members', JSON.stringify(this.members));
                         break;
                     case 'subtasks':
                         this.subtasks = data;
@@ -5511,10 +7045,58 @@
                 document.getElementById('cancel-client-btn').addEventListener('click', () => this.closeClientModal());
                 document.getElementById('client-form').addEventListener('submit', (e) => this.handleClientSubmit(e));
                 
+                // 担当者関連
+                document.getElementById('add-member-btn').addEventListener('click', () => this.openMemberModal());
+                document.getElementById('close-member-modal').addEventListener('click', () => this.closeMemberModal());
+                document.getElementById('cancel-member-btn').addEventListener('click', () => this.closeMemberModal());
+                document.getElementById('member-form').addEventListener('submit', (e) => this.handleMemberSubmit(e));
+                
                 // フィルター・検索
-                document.getElementById('search-input').addEventListener('input', () => this.renderTasks());
-                document.getElementById('filter-status').addEventListener('change', () => this.renderTasks());
-                document.getElementById('filter-priority').addEventListener('change', () => this.renderTasks());
+                document.getElementById('search-input').addEventListener('input', () => {
+                    this.renderTasks();
+                    // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                    this.updateRelatedTasksIfModalOpen();
+                });
+                
+                // ステータスフィルターのデフォルト値を設定
+                const filterStatus = document.getElementById('filter-status');
+                filterStatus.value = 'active'; // デフォルトで「未着手と進行中のみ」を選択
+                filterStatus.addEventListener('change', () => {
+                    this.updateFilterIndicators();
+                    this.renderTasks();
+                    // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                    this.updateRelatedTasksIfModalOpen();
+                });
+                
+                // 優先度フィルター
+                document.getElementById('filter-priority').addEventListener('change', () => {
+                    this.updateFilterIndicators();
+                    this.renderTasks();
+                    // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                    this.updateRelatedTasksIfModalOpen();
+                });
+                
+                // 顧客フィルター
+                document.getElementById('filter-client').addEventListener('change', () => {
+                    this.updateFilterIndicators();
+                    this.renderTasks();
+                    // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                    this.updateRelatedTasksIfModalOpen();
+                });
+                
+                // 担当者フィルター
+                const filterMember = document.getElementById('filter-member');
+                if (filterMember) {
+                    filterMember.addEventListener('change', () => {
+                        this.updateFilterIndicators();
+                        this.renderTasks();
+                        // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                        this.updateRelatedTasksIfModalOpen();
+                    });
+                }
+                
+                // 初期表示時にフィルターインジケーターを更新
+                this.updateFilterIndicators();
                 
                 // ガントチャート
                 document.getElementById('gantt-prev-month').addEventListener('click', () => this.changeGanttMonth(-1));
@@ -5735,8 +7317,18 @@
                 // タブ固有の初期化処理
                 switch (tabName) {
                     case 'tasks':
+                        // フィルターのデフォルト値を設定
+                        const filterStatus = document.getElementById('filter-status');
+                        if (filterStatus && !filterStatus.value) {
+                            filterStatus.value = 'active';
+                        }
                         this.renderTasks();
-                        setTimeout(() => this.initializeTaskFilters(), 100);
+                        setTimeout(() => {
+                            this.initializeTaskFilters();
+                            if (typeof this.updateFilterIndicators === 'function') {
+                                this.updateFilterIndicators();
+                            }
+                        }, 100);
                         break;
                     case 'gantt':
                         this.renderGanttChart();
@@ -5750,6 +7342,8 @@
                         break;
                     case 'settings':
                         this.loadSettings();
+                        this.renderMembers();
+                        this.updateAllMemberFilters();
                         break;
                 }
             }
@@ -5876,6 +7470,7 @@
                 
                 localStorage.setItem('taskflow_tasks', JSON.stringify(this.tasks));
                 localStorage.setItem('taskflow_clients', JSON.stringify(this.clients));
+                localStorage.setItem('taskflow_members', JSON.stringify(this.members));
                 localStorage.setItem('taskflow_subtasks', JSON.stringify(this.subtasks));
                 localStorage.setItem('taskflow_time_logs', JSON.stringify(this.timeLogs));
                 
@@ -5962,19 +7557,62 @@
                 // サブタスクコンテナを必ずクリア
                 document.getElementById('subtasks-container').innerHTML = '';
                 
+                // 関連タスク選択を最初にクリア（編集・新規作成どちらでも）
+                const relatedTasksSelect = document.getElementById('task-related-tasks');
+                const buttonText = document.getElementById('related-tasks-button-text');
+                const dropdown = document.getElementById('related-tasks-dropdown');
+                
+                if (relatedTasksSelect) {
+                    relatedTasksSelect.innerHTML = '';
+                    // すべての選択を解除
+                    Array.from(relatedTasksSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                }
+                
+                if (buttonText) {
+                    buttonText.textContent = '関連タスクを選択';
+                    buttonText.className = 'text-gray-700';
+                }
+                
+                if (dropdown) {
+                    dropdown.classList.add('hidden');
+                }
+                
                 if (task) {
                     title.textContent = 'タスクを編集';
                     // 先に顧客選択肢を作成（現在選択されている顧客IDを渡す）
                     this.populateClientSelect(task.client_id);
+                    this.populateTaskMemberSelect(task.member_id);
                     this.populateTaskForm(task);
+                    // 編集時のみ、関連タスクを選択状態で表示
+                    setTimeout(() => {
+                        const select = document.getElementById('task-related-tasks');
+                        const modal = document.getElementById('task-modal');
+                        if (select && modal && !modal.classList.contains('hidden')) {
+                            this.populateRelatedTasksSelect(task.id, task.related_tasks || []);
+                        }
+                    }, 100);
                 } else {
                     title.textContent = '新しいタスク';
                     document.getElementById('task-form').reset();
                     // 新規作成時は通常の顧客選択肢を作成
                     this.populateClientSelect();
+                    this.populateTaskMemberSelect();
+                    // 新規作成時も選択肢を表示（何も選択されていない状態）
+                    setTimeout(() => {
+                        const select = document.getElementById('task-related-tasks');
+                        const modal = document.getElementById('task-modal');
+                        if (select && modal && !modal.classList.contains('hidden')) {
+                            this.populateRelatedTasksSelect(null, []);
+                        }
+                    }, 100);
                 }
                 
                 modal.classList.remove('hidden');
+                
+                // 関連タスクドロップダウンのトグル機能を設定
+                this.setupRelatedTasksDropdown();
                 
                 // 🔧 モーダルUX向上機能
                 // Escapeキーでモーダルを閉じる
@@ -6045,8 +7683,46 @@
             }
             
             closeTaskModal() {
-                document.getElementById('task-modal').classList.add('hidden');
+                const modal = document.getElementById('task-modal');
+                const form = document.getElementById('task-form');
+                
+                // フォームをリセット
+                if (form) {
+                    form.reset();
+                }
+                
+                // 関連タスク選択をクリア
+                const relatedTasksSelect = document.getElementById('task-related-tasks');
+                const dropdown = document.getElementById('related-tasks-dropdown');
+                const buttonText = document.getElementById('related-tasks-button-text');
+                
+                if (relatedTasksSelect) {
+                    // すべての選択を解除
+                    Array.from(relatedTasksSelect.options).forEach(option => {
+                        option.selected = false;
+                    });
+                    // 内容をクリア
+                    relatedTasksSelect.innerHTML = '';
+                }
+                
+                if (buttonText) {
+                    buttonText.textContent = '関連タスクを選択';
+                    buttonText.className = 'text-gray-700';
+                }
+                
+                if (dropdown) {
+                    dropdown.classList.add('hidden');
+                }
+                
+                // サブタスクコンテナをクリア
+                const subtasksContainer = document.getElementById('subtasks-container');
+                if (subtasksContainer) {
+                    subtasksContainer.innerHTML = '';
+                }
+                
+                modal.classList.add('hidden');
                 this.currentEditingTask = null;
+                
                 // Escapeキーイベントリスナーを削除
                 document.removeEventListener('keydown', this.handleModalKeydown);
             }
@@ -6058,12 +7734,18 @@
                 document.getElementById('task-priority').value = task.priority || 'medium';
                 
                 if (task.scheduled_date) {
-                    // datetime-localフィールドのためにローカル時間として表示
-                    // タイムゾーンオフセットは手動調整せず、ブラウザの自動変換に任せる
+                    // 日本時間（JST）として表示
+                    // ISO形式（UTC）の日時文字列をローカル時間（日本時間）に変換
                     const scheduledDate = new Date(task.scheduled_date);
                     if (!isNaN(scheduledDate.getTime())) {
-                        // ISO形式の最初の16文字（YYYY-MM-DDTHH:mm）を使用
-                        document.getElementById('task-scheduled').value = scheduledDate.toISOString().slice(0, 16);
+                        // ローカル時間（日本時間）として表示（YYYY-MM-DDTHH:mm形式）
+                        // datetime-localフィールドはローカル時間を期待するため、そのまま使用
+                        const year = scheduledDate.getFullYear();
+                        const month = String(scheduledDate.getMonth() + 1).padStart(2, '0');
+                        const day = String(scheduledDate.getDate()).padStart(2, '0');
+                        const hours = String(scheduledDate.getHours()).padStart(2, '0');
+                        const minutes = String(scheduledDate.getMinutes()).padStart(2, '0');
+                        document.getElementById('task-scheduled').value = `${year}-${month}-${day}T${hours}:${minutes}`;
                     } else {
                         document.getElementById('task-scheduled').value = '';
                     }
@@ -6072,9 +7754,14 @@
                 }
                 
                 document.getElementById('task-description').value = task.description || '';
+                
                 // 顧客選択（二重保証のため再設定）
                 document.getElementById('task-client').value = task.client_id || '';
+                // 担当者選択
+                document.getElementById('task-member').value = task.member_id || '';
                 document.getElementById('task-estimated-hours').value = task.estimated_hours || '';
+                
+                // 関連タスクの選択肢は openTaskModal で設定されるため、ここでは設定しない
                 
                 // サブタスクを読み込み
                 const taskSubtasks = this.subtasks.filter(st => st.parent_task_id === task.id);
@@ -6147,6 +7834,8 @@
             
             populateClientSelect(selectedClientId = null) {
                 const select = document.getElementById('task-client');
+                if (!select) return;
+                
                 const currentValue = selectedClientId || select.value;
                 select.innerHTML = '<option value="">顧客を選択</option>';
                 
@@ -6158,6 +7847,23 @@
                         option.selected = true;
                     }
                     select.appendChild(option);
+                });
+                
+                // 顧客選択の変更イベントを設定
+                // 既存のイベントリスナーを削除するために、要素をクローンして置き換え
+                const newSelect = select.cloneNode(true);
+                select.parentNode.replaceChild(newSelect, select);
+                newSelect.addEventListener('change', () => {
+                    // 関連タスクの選択肢を更新
+                    const modal = document.getElementById('task-modal');
+                    if (modal && !modal.classList.contains('hidden')) {
+                        const currentTaskId = this.currentEditingTask ? this.currentEditingTask.id : null;
+                        const relatedTasksSelect = document.getElementById('task-related-tasks');
+                        const selectedTaskIds = relatedTasksSelect ? Array.from(relatedTasksSelect.selectedOptions).map(opt => opt.value) : [];
+                        setTimeout(() => {
+                            this.populateRelatedTasksSelect(currentTaskId, selectedTaskIds);
+                        }, 50);
+                    }
                 });
             }
             
@@ -6186,14 +7892,56 @@
             handleTaskSubmit(e) {
                 e.preventDefault();
                 
+                // 関連タスクの取得
+                const relatedTasksSelect = document.getElementById('task-related-tasks');
+                let relatedTasks = [];
+                if (relatedTasksSelect) {
+                    const allOptions = Array.from(relatedTasksSelect.options);
+                    const selectedOptions = Array.from(relatedTasksSelect.selectedOptions);
+                    console.log('🔍 関連タスク取得:', {
+                        allOptionsCount: allOptions.length,
+                        selectedOptionsCount: selectedOptions.length,
+                        selectedValues: selectedOptions.map(opt => opt.value),
+                        allValues: allOptions.map(opt => opt.value)
+                    });
+                    
+                    relatedTasks = selectedOptions
+                        .map(option => option.value)
+                        .filter(id => {
+                            // 空文字列、現在編集中のタスクID、無効な値を除外
+                            return id && 
+                                   id !== '' && 
+                                   id !== (this.currentEditingTask?.id || '') &&
+                                   this.tasks.some(t => t.id === id); // 存在するタスクIDのみ
+                        });
+                }
+                
+                console.log('✅ 関連タスク保存:', {
+                    relatedTasks: relatedTasks,
+                    count: relatedTasks.length,
+                    selectedOptionsCount: relatedTasksSelect ? relatedTasksSelect.selectedOptions.length : 0
+                });
+                
+                // 予定開始日時を日本時間（JST）として保存
+                // datetime-localの値（YYYY-MM-DDTHH:mm）はローカル時間として解釈されるため、
+                // そのままISO形式に変換するとUTCとして保存される
+                let scheduledDateValue = document.getElementById('task-scheduled').value || null;
+                if (scheduledDateValue) {
+                    // ローカル時間として解釈（ブラウザのタイムゾーン、日本時間を想定）
+                    const localDate = new Date(scheduledDateValue);
+                    scheduledDateValue = localDate.toISOString();
+                }
+                
                 const taskData = {
                     id: this.currentEditingTask ? this.currentEditingTask.id : this.generateId(),
                     title: document.getElementById('task-title').value,
                     deadline: document.getElementById('task-deadline').value,
                     priority: document.getElementById('task-priority').value,
-                    scheduled_date: document.getElementById('task-scheduled').value || null,
+                    scheduled_date: scheduledDateValue,
                     description: document.getElementById('task-description').value || '',
                     client_id: document.getElementById('task-client').value || null,
+                    member_id: document.getElementById('task-member').value || null,
+                    related_tasks: relatedTasks || [],
                     estimated_hours: parseFloat(document.getElementById('task-estimated-hours').value) || 0,
                     status: this.currentEditingTask ? this.currentEditingTask.status : 'pending',
                     actual_hours: this.currentEditingTask ? this.currentEditingTask.actual_hours : 0,
@@ -6237,12 +7985,77 @@
                 });
                 
                 // タスクの保存または更新
-                if (this.currentEditingTask) {
+                const isEditing = !!this.currentEditingTask;
+                // 既存の関連タスクを取得（タスクを更新する前に取得）
+                const oldRelatedTasks = isEditing ? (this.currentEditingTask.related_tasks || []) : [];
+                
+                console.log('🔄 双方向関連タスク設定開始:', {
+                    isEditing: isEditing,
+                    currentTaskId: taskData.id,
+                    oldRelatedTasks: oldRelatedTasks,
+                    newRelatedTasks: relatedTasks
+                });
+                
+                if (isEditing) {
                     const index = this.tasks.findIndex(t => t.id === taskData.id);
                     this.tasks[index] = taskData;
                 } else {
                     this.tasks.push(taskData);
                 }
+                
+                // 双方向の関連タスク関係を自動的に設定
+                const currentTaskId = taskData.id;
+                const newRelatedTasks = relatedTasks || [];
+                
+                // すべての関連タスク（新しく設定されたもの）に対して、双方向の関係を確実に設定
+                // まず、削除された関連タスクから現在のタスクを削除
+                const removedRelatedTasks = oldRelatedTasks.filter(id => !newRelatedTasks.includes(id));
+                console.log('🗑️ 削除される関連タスク:', removedRelatedTasks);
+                removedRelatedTasks.forEach(relatedTaskId => {
+                    const relatedTask = this.tasks.find(t => t.id === relatedTaskId);
+                    if (relatedTask) {
+                        if (!relatedTask.related_tasks) {
+                            relatedTask.related_tasks = [];
+                        }
+                        const beforeCount = relatedTask.related_tasks.length;
+                        relatedTask.related_tasks = relatedTask.related_tasks.filter(id => id !== currentTaskId);
+                        const afterCount = relatedTask.related_tasks.length;
+                        if (beforeCount !== afterCount) {
+                            relatedTask.updated_at = new Date().toISOString();
+                            console.log(`  ✅ タスク "${relatedTask.title}" から関連タスクを削除: ${currentTaskId}`);
+                        }
+                    }
+                });
+                
+                // 新しく設定されたすべての関連タスクに対して、双方向の関係を確実に設定
+                console.log('➕ 設定される関連タスク:', newRelatedTasks);
+                newRelatedTasks.forEach(relatedTaskId => {
+                    const relatedTask = this.tasks.find(t => t.id === relatedTaskId);
+                    if (relatedTask) {
+                        if (!relatedTask.related_tasks) {
+                            relatedTask.related_tasks = [];
+                        }
+                        // 既に含まれていない場合のみ追加（双方向の関係を確実に設定）
+                        const beforeIncludes = relatedTask.related_tasks.includes(currentTaskId);
+                        if (!beforeIncludes) {
+                            relatedTask.related_tasks.push(currentTaskId);
+                            relatedTask.updated_at = new Date().toISOString();
+                            console.log(`  ✅ タスク "${relatedTask.title}" (${relatedTaskId}) に関連タスクを追加: ${currentTaskId}`, {
+                                before: relatedTask.related_tasks.length - 1,
+                                after: relatedTask.related_tasks.length,
+                                relatedTasks: relatedTask.related_tasks
+                            });
+                        } else {
+                            console.log(`  ⏭️ タスク "${relatedTask.title}" (${relatedTaskId}) には既に関連タスクが設定されています`, {
+                                currentRelatedTasks: relatedTask.related_tasks
+                            });
+                        }
+                    } else {
+                        console.warn(`  ⚠️ 関連タスクが見つかりません: ${relatedTaskId}`);
+                    }
+                });
+                
+                console.log('✅ 双方向関連タスク設定完了');
                 
                 // 既存のサブタスクを削除して新しいものを追加
                 this.subtasks = this.subtasks.filter(st => st.parent_task_id !== taskData.id);
@@ -6565,6 +8378,9 @@
                 // 顧客フィルターを初期化
                 this.updateTaskClientFilter();
                 
+                // 担当者フィルターを初期化
+                this.updateTaskMemberFilter();
+                
                 // 既存のイベントリスナーを設定
                 const searchInput = document.getElementById('search-input');
                 const filterStatus = document.getElementById('filter-status');
@@ -6575,20 +8391,38 @@
                     searchInput.addEventListener('input', () => this.renderTasks());
                 }
                 if (filterStatus) {
+                    // デフォルト値を設定
+                    if (!filterStatus.value) {
+                        filterStatus.value = 'active';
+                    }
                     filterStatus.addEventListener('change', () => {
                         console.log('🔍 ステータスフィルター変更:', filterStatus.value);
+                        this.updateFilterIndicators();
                         this.renderTasks();
+                        // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                        this.updateRelatedTasksIfModalOpen();
                     });
                 }
                 if (filterPriority) {
-                    filterPriority.addEventListener('change', () => this.renderTasks());
+                    filterPriority.addEventListener('change', () => {
+                        this.updateFilterIndicators();
+                        this.renderTasks();
+                        // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                        this.updateRelatedTasksIfModalOpen();
+                    });
                 }
                 if (filterClient) {
                     filterClient.addEventListener('change', () => {
                         console.log('🔍 顧客フィルター変更:', filterClient.value);
+                        this.updateFilterIndicators();
                         this.renderTasks();
+                        // タスクモーダルが開いている場合、関連タスクの選択肢を更新
+                        this.updateRelatedTasksIfModalOpen();
                     });
                 }
+                
+                // 初期表示時にフィルターインジケーターを更新
+                this.updateFilterIndicators();
                 
                 console.log('✅ タスクフィルターを初期化しました');
             }
@@ -6597,8 +8431,11 @@
                 const filterStatus = document.getElementById('filter-status');
                 if (!filterStatus) return;
                 
-                // 既存のオプションを保存
-                const currentValue = filterStatus.value;
+                // 既存のオプションを保存（空の場合はデフォルト値'active'を設定）
+                let currentValue = filterStatus.value;
+                if (!currentValue || currentValue === '') {
+                    currentValue = 'active'; // デフォルト値を設定
+                }
                 
                 // 新しいオプションを設定
                 filterStatus.innerHTML = `
@@ -6609,10 +8446,13 @@
                     <option value="completed">完了</option>
                 `;
                 
-                // 前の選択値を復元
+                // 前の選択値を復元（なければデフォルト値）
                 filterStatus.value = currentValue;
                 
-                console.log('🔄 ステータスフィルターのオプションを更新しました');
+                // フィルターインジケーターを更新
+                this.updateFilterIndicators();
+                
+                console.log('🔄 ステータスフィルターのオプションを更新しました。現在の値:', currentValue);
             }
             
             updateTaskClientFilter() {
@@ -6645,12 +8485,552 @@
                 console.log('🔄 顧客フィルターのオプションを更新しました');
             }
             
+            updateFilterIndicators() {
+                const statusFilter = document.getElementById('filter-status');
+                const priorityFilter = document.getElementById('filter-priority');
+                const clientFilter = document.getElementById('filter-client');
+                const memberFilter = document.getElementById('filter-member');
+                
+                // ステータスフィルターのバッジ
+                const statusBadge = document.getElementById('filter-status-badge');
+                const statusText = document.getElementById('filter-status-text');
+                if (statusFilter && statusFilter.value && statusFilter.value !== '') {
+                    const statusOptions = {
+                        'active': '未着手と進行中のみ',
+                        'pending': '未着手',
+                        'in_progress': '進行中',
+                        'completed': '完了'
+                    };
+                    const displayText = statusOptions[statusFilter.value];
+                    if (displayText && statusText) {
+                        statusText.textContent = displayText;
+                    }
+                    if (statusBadge) {
+                        statusBadge.classList.remove('hidden');
+                    }
+                    statusFilter.classList.add('filter-active');
+                } else {
+                    // 「全ステータス」が選択されている場合、バッジを非表示
+                    if (statusBadge) {
+                        statusBadge.classList.add('hidden');
+                    }
+                    statusFilter.classList.remove('filter-active');
+                }
+                
+                // 優先度フィルターのバッジ
+                const priorityBadge = document.getElementById('filter-priority-badge');
+                const priorityText = document.getElementById('filter-priority-text');
+                if (priorityFilter && priorityFilter.value) {
+                    const priorityOptions = {
+                        'high': '高',
+                        'medium': '中',
+                        'low': '低'
+                    };
+                    priorityText.textContent = priorityOptions[priorityFilter.value] || '全優先度';
+                    if (priorityBadge) {
+                        priorityBadge.classList.remove('hidden');
+                    }
+                    priorityFilter.classList.add('filter-active');
+                } else {
+                    if (priorityBadge) {
+                        priorityBadge.classList.add('hidden');
+                    }
+                    priorityFilter.classList.remove('filter-active');
+                }
+                
+                // 顧客フィルターのバッジ
+                const clientBadge = document.getElementById('filter-client-badge');
+                const clientText = document.getElementById('filter-client-text');
+                if (clientFilter && clientFilter.value) {
+                    const selectedClient = this.clients.find(c => c.id === clientFilter.value);
+                    clientText.textContent = selectedClient ? selectedClient.name : '全顧客';
+                    if (clientBadge) {
+                        clientBadge.classList.remove('hidden');
+                    }
+                    clientFilter.classList.add('filter-active');
+                } else {
+                    if (clientBadge) {
+                        clientBadge.classList.add('hidden');
+                    }
+                    clientFilter.classList.remove('filter-active');
+                }
+                
+                // 担当者フィルターのバッジ
+                const memberBadge = document.getElementById('filter-member-badge');
+                const memberText = document.getElementById('filter-member-text');
+                if (memberFilter && memberFilter.value) {
+                    const selectedMember = this.members.find(m => m.id === memberFilter.value);
+                    if (memberText) {
+                        memberText.textContent = selectedMember ? selectedMember.name : '全担当者';
+                    }
+                    if (memberBadge) {
+                        memberBadge.classList.remove('hidden');
+                    }
+                    memberFilter.classList.add('filter-active');
+                } else {
+                    if (memberBadge) {
+                        memberBadge.classList.add('hidden');
+                    }
+                    if (memberFilter) {
+                        memberFilter.classList.remove('filter-active');
+                    }
+                }
+            }
+            
+            // 担当者管理機能
+            openMemberModal(member = null) {
+                this.currentEditingMember = member;
+                const modal = document.getElementById('member-modal');
+                const title = document.getElementById('member-modal-title');
+                
+                if (member) {
+                    title.textContent = '担当者を編集';
+                    this.populateMemberForm(member);
+                } else {
+                    title.textContent = '新しい担当者';
+                    document.getElementById('member-form').reset();
+                    document.getElementById('member-id').value = '';
+                }
+                
+                modal.classList.remove('hidden');
+                
+                // Escapeキーでモーダルを閉じる
+                this.handleMemberModalKeydown = (e) => {
+                    if (e.key === 'Escape') {
+                        this.closeMemberModal();
+                    }
+                };
+                document.addEventListener('keydown', this.handleMemberModalKeydown);
+                
+                // モーダル内の最初の入力要素にフォーカス
+                setTimeout(() => {
+                    const firstInput = modal.querySelector('input[type="text"]');
+                    if (firstInput) {
+                        firstInput.focus();
+                    }
+                }, 100);
+            }
+            
+            closeMemberModal() {
+                document.getElementById('member-modal').classList.add('hidden');
+                this.currentEditingMember = null;
+                // Escapeキーイベントリスナーを削除
+                if (this.handleMemberModalKeydown) {
+                    document.removeEventListener('keydown', this.handleMemberModalKeydown);
+                }
+            }
+            
+            populateMemberForm(member) {
+                document.getElementById('member-id').value = member.id;
+                document.getElementById('member-name').value = member.name || '';
+                document.getElementById('member-email').value = member.email || '';
+                document.getElementById('member-phone').value = member.phone || '';
+                document.getElementById('member-notes').value = member.notes || '';
+            }
+            
+            handleMemberSubmit(e) {
+                e.preventDefault();
+                
+                const memberData = {
+                    id: this.currentEditingMember ? this.currentEditingMember.id : this.generateId(),
+                    name: document.getElementById('member-name').value,
+                    email: document.getElementById('member-email').value,
+                    phone: document.getElementById('member-phone').value,
+                    notes: document.getElementById('member-notes').value,
+                    created_at: this.currentEditingMember ? this.currentEditingMember.created_at : new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                };
+                
+                if (!memberData.name.trim()) {
+                    alert('名前は必須です');
+                    return;
+                }
+                
+                if (this.currentEditingMember) {
+                    const index = this.members.findIndex(m => m.id === memberData.id);
+                    this.members[index] = memberData;
+                } else {
+                    this.members.push(memberData);
+                }
+                
+                this.saveData();
+                this.closeMemberModal();
+                this.renderMembers();
+                this.updateAllMemberFilters();
+            }
+            
+            deleteMember(memberId) {
+                if (confirm('この担当者を削除しますか？')) {
+                    this.members = this.members.filter(m => m.id !== memberId);
+                    
+                    // 関連するタスクのmember_idをクリア
+                    this.tasks.forEach(task => {
+                        if (task.member_id === memberId) {
+                            task.member_id = null;
+                        }
+                    });
+                    
+                    this.saveData();
+                    this.renderMembers();
+                    this.updateAllMemberFilters();
+                    this.renderTasks();
+                }
+            }
+            
+            renderMembers() {
+                const tableBody = document.getElementById('members-table-body');
+                const emptyState = document.getElementById('members-empty-state');
+                
+                if (!tableBody || !emptyState) return;
+                
+                if (this.members.length === 0) {
+                    tableBody.innerHTML = '';
+                    emptyState.classList.remove('hidden');
+                    return;
+                }
+                
+                emptyState.classList.add('hidden');
+                tableBody.innerHTML = '';
+                
+                this.members.forEach(member => {
+                    const memberTasks = this.tasks.filter(t => t.member_id === member.id);
+                    
+                    const row = document.createElement('tr');
+                    row.className = 'hover:bg-gray-50 transition-colors';
+                    
+                    row.innerHTML = `
+                        <td class="px-4 py-3">
+                            <div class="font-medium text-gray-900">${member.name}</div>
+                            ${member.notes ? `<div class="text-xs text-gray-500 mt-1 truncate" title="${member.notes}">${member.notes}</div>` : ''}
+                        </td>
+                        <td class="px-4 py-3">
+                            ${member.email ? `<div class="text-sm text-gray-900"><i class="fas fa-envelope mr-1"></i>${member.email}</div>` : '<span class="text-gray-400 text-xs">-</span>'}
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                ${memberTasks.length}
+                            </span>
+                        </td>
+                        <td class="px-4 py-3 text-center">
+                            <div class="flex justify-center space-x-1">
+                                <button class="p-1.5 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors"
+                                        onclick="app.openMemberModal(app.members.find(m => m.id === '${member.id}'))"
+                                        title="編集">
+                                    <i class="fas fa-edit text-blue-600"></i>
+                                </button>
+                                <button class="p-1.5 rounded-md border border-gray-300 hover:bg-gray-50 transition-colors"
+                                        onclick="app.deleteMember('${member.id}')"
+                                        title="削除">
+                                    <i class="fas fa-trash text-red-600"></i>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+            }
+            
+            updateAllMemberFilters() {
+                // タスクフォームの担当者選択を更新
+                this.populateTaskMemberSelect();
+                // フィルターの担当者選択を更新
+                this.updateTaskMemberFilter();
+            }
+            
+            populateTaskMemberSelect(selectedMemberId = null) {
+                const select = document.getElementById('task-member');
+                if (!select) return;
+                
+                const currentValue = selectedMemberId || select.value;
+                select.innerHTML = '<option value="">担当者を選択</option>';
+                
+                this.members.forEach(member => {
+                    const option = document.createElement('option');
+                    option.value = member.id;
+                    option.textContent = member.name;
+                    if (member.id === currentValue) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                });
+            }
+            
+            populateRelatedTasksSelect(currentTaskId = null, selectedTaskIds = []) {
+                const select = document.getElementById('task-related-tasks');
+                const dropdown = document.getElementById('related-tasks-dropdown');
+                const listContainer = document.getElementById('related-tasks-list');
+                
+                if (!select || !dropdown || !listContainer) {
+                    console.warn('関連タスク選択要素が見つかりません');
+                    return;
+                }
+                
+                // モーダルが非表示の場合は実行しない
+                const modal = document.getElementById('task-modal');
+                if (modal && modal.classList.contains('hidden')) {
+                    console.warn('モーダルが非表示のため、関連タスク選択肢の更新をスキップ');
+                    return;
+                }
+                
+                // 選択状態をクリア
+                select.innerHTML = '';
+                listContainer.innerHTML = '';
+                
+                // タスクモーダル内の顧客選択を取得
+                const taskClientSelect = document.getElementById('task-client');
+                const selectedClientId = taskClientSelect ? (taskClientSelect.value || '') : '';
+                
+                // デバッグ用ログ
+                console.log('🔍 関連タスクフィルタリング:', {
+                    selectedClientId: selectedClientId,
+                    selectedClientIdLength: selectedClientId.length,
+                    isEmpty: selectedClientId === '',
+                    allTasksCount: this.tasks.length,
+                    currentTaskId: currentTaskId
+                });
+                
+                // 現在編集中のタスク以外のタスクを取得し、顧客フィルタを適用
+                const availableTasks = this.tasks.filter(task => {
+                    // 現在編集中のタスクは除外
+                    if (currentTaskId && task.id === currentTaskId) {
+                        return false;
+                    }
+                    
+                    // 顧客フィルターの処理
+                    // 顧客が選択されている場合（空文字列でない場合）、その顧客のタスクのみを表示
+                    if (selectedClientId && selectedClientId !== '') {
+                        // 顧客IDが一致するタスクのみを表示
+                        const matches = task.client_id === selectedClientId;
+                        return matches;
+                    }
+                    
+                    // 顧客が選択されていない場合（空文字列または未選択）は全てのタスクを表示
+                    return true;
+                });
+                
+                console.log('✅ フィルタリング結果:', {
+                    availableTasksCount: availableTasks.length,
+                    selectedClientId: selectedClientId || '(未選択)'
+                });
+                
+                if (availableTasks.length === 0) {
+                    listContainer.innerHTML = '<div class="text-sm text-gray-500 p-4 text-center">関連タスクがありません</div>';
+                    return;
+                }
+                
+                // 選択されたタスクIDのセットを作成
+                const selectedSet = new Set(selectedTaskIds && Array.isArray(selectedTaskIds) ? selectedTaskIds : []);
+                
+                // 選択可能なタスクをドロップダウンに追加
+                availableTasks.forEach(task => {
+                    const isSelected = selectedSet.has(task.id);
+                    
+                    // select要素に追加（データ保存用）
+                    const option = document.createElement('option');
+                    option.value = task.id;
+                    option.textContent = task.title;
+                    if (isSelected) {
+                        option.selected = true;
+                    }
+                    select.appendChild(option);
+                    
+                    // ドロップダウンリストに追加
+                    const listItem = document.createElement('label');
+                    const baseClasses = 'flex items-start px-4 py-3.5 hover:bg-blue-50 cursor-pointer transition-colors';
+                    const selectedClasses = isSelected ? 'bg-blue-50' : 'bg-white';
+                    listItem.className = `${baseClasses} ${selectedClasses}`;
+                    
+                    // HTMLエスケープ処理
+                    const escapedTitle = task.title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+                    
+                    listItem.innerHTML = `
+                        <input type="checkbox" 
+                               value="${task.id}" 
+                               class="related-task-checkbox flex-shrink-0"
+                               style="width: 16px !important; height: 16px !important; min-width: 16px !important; min-height: 16px !important; max-width: 16px !important; max-height: 16px !important; margin-right: 10px !important; margin-top: 2px !important; border: 1.5px solid #9ca3af !important; border-radius: 3px !important; appearance: none !important; -webkit-appearance: none !important; -moz-appearance: none !important;"
+                               ${isSelected ? 'checked' : ''}>
+                        <span class="text-base ${isSelected ? 'text-blue-800 font-semibold' : 'text-gray-900 font-medium'} flex-1 leading-relaxed break-words min-w-0">${escapedTitle}</span>
+                    `;
+                    
+                    // チェックボックス要素に直接イベントリスナーを追加
+                    const checkbox = listItem.querySelector('input[type="checkbox"]');
+                    if (checkbox) {
+                        checkbox.addEventListener('change', (e) => {
+                            const isChecked = e.target.checked;
+                            console.log(`📌 関連タスクチェックボックス変更: ${task.id} = ${isChecked}`);
+                            this.updateRelatedTasksSelection(task.id, isChecked);
+                            // 選択状態に応じてスタイルを更新
+                            const textSpan = listItem.querySelector('span');
+                            if (isChecked) {
+                                textSpan.classList.remove('text-gray-900', 'font-medium');
+                                textSpan.classList.add('text-blue-800', 'font-semibold');
+                                listItem.classList.remove('bg-white');
+                                listItem.classList.add('bg-blue-50');
+                            } else {
+                                textSpan.classList.remove('text-blue-800', 'font-semibold');
+                                textSpan.classList.add('text-gray-900', 'font-medium');
+                                listItem.classList.remove('bg-blue-50');
+                                listItem.classList.add('bg-white');
+                            }
+                        });
+                    }
+                    
+                    listContainer.appendChild(listItem);
+                });
+                
+                // ボタンのテキストを更新
+                this.updateRelatedTasksButtonText(selectedTaskIds || []);
+                
+                console.log(`関連タスク選択肢を更新: ${availableTasks.length}件のタスク、選択済み: ${selectedSet.size}件`);
+            }
+            
+            updateRelatedTasksSelection(taskId, isSelected) {
+                const select = document.getElementById('task-related-tasks');
+                if (!select) {
+                    console.warn('⚠️ task-related-tasks要素が見つかりません');
+                    return;
+                }
+                
+                const option = select.querySelector(`option[value="${taskId}"]`);
+                
+                if (option) {
+                    option.selected = isSelected;
+                    console.log(`✅ オプション選択状態を更新: ${taskId} = ${isSelected}`, {
+                        optionValue: option.value,
+                        optionSelected: option.selected,
+                        allSelectedOptions: Array.from(select.selectedOptions).map(opt => opt.value)
+                    });
+                } else {
+                    console.warn(`⚠️ オプションが見つかりません: ${taskId}`, {
+                        availableOptions: Array.from(select.options).map(opt => opt.value)
+                    });
+                }
+                
+                // 選択状態を更新してボタンのテキストを更新
+                const selectedIds = Array.from(select.selectedOptions).map(opt => opt.value);
+                console.log(`📋 現在選択されている関連タスク:`, selectedIds);
+                this.updateRelatedTasksButtonText(selectedIds);
+            }
+            
+            updateRelatedTasksButtonText(selectedTaskIds) {
+                const buttonText = document.getElementById('related-tasks-button-text');
+                if (!buttonText) return;
+                
+                if (!selectedTaskIds || selectedTaskIds.length === 0) {
+                    buttonText.textContent = '関連タスクを選択';
+                    buttonText.className = 'text-gray-700';
+                    return;
+                }
+                
+                // 選択されたタスクの数を表示
+                const count = selectedTaskIds.length;
+                if (count === 1) {
+                    const task = this.tasks.find(t => t.id === selectedTaskIds[0]);
+                    buttonText.textContent = task ? task.title : '1件選択中';
+                } else {
+                    buttonText.textContent = `${count}件のタスクを選択中`;
+                }
+                buttonText.className = 'text-blue-600 font-medium';
+            }
+            
+            removeRelatedTask(taskId) {
+                const select = document.getElementById('task-related-tasks');
+                const option = select.querySelector(`option[value="${taskId}"]`);
+                const checkbox = document.querySelector(`#related-tasks-list input[value="${taskId}"]`);
+                
+                if (option) {
+                    option.selected = false;
+                }
+                if (checkbox) {
+                    checkbox.checked = false;
+                }
+                
+                // ボタンのテキストを更新
+                const selectedIds = Array.from(select.selectedOptions).map(opt => opt.value);
+                this.updateRelatedTasksButtonText(selectedIds);
+            }
+            
+            setupRelatedTasksDropdown() {
+                const toggleBtn = document.getElementById('related-tasks-toggle');
+                const dropdown = document.getElementById('related-tasks-dropdown');
+                
+                if (!toggleBtn || !dropdown) return;
+                
+                // 既存のイベントリスナーを削除するためにクローン
+                const newToggleBtn = toggleBtn.cloneNode(true);
+                toggleBtn.parentNode.replaceChild(newToggleBtn, toggleBtn);
+                
+                // トグルボタンのクリックイベント
+                newToggleBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    dropdown.classList.toggle('hidden');
+                    
+                    // アイコンを回転
+                    const icon = newToggleBtn.querySelector('i');
+                    if (icon) {
+                        icon.classList.toggle('fa-chevron-down');
+                        icon.classList.toggle('fa-chevron-up');
+                    }
+                });
+                
+                // ドキュメントクリックで閉じる
+                const closeDropdown = (e) => {
+                    if (!dropdown.contains(e.target) && !newToggleBtn.contains(e.target)) {
+                        dropdown.classList.add('hidden');
+                        const icon = newToggleBtn.querySelector('i');
+                        if (icon) {
+                            icon.classList.remove('fa-chevron-up');
+                            icon.classList.add('fa-chevron-down');
+                        }
+                    }
+                };
+                
+                // 既存のイベントリスナーを削除してから追加
+                document.removeEventListener('click', closeDropdown);
+                document.addEventListener('click', closeDropdown);
+            }
+            
+            updateTaskMemberFilter() {
+                const filterMember = document.getElementById('filter-member');
+                if (!filterMember) return;
+                
+                const currentValue = filterMember.value;
+                filterMember.innerHTML = '<option value="">全担当者</option>';
+                
+                this.members.forEach(member => {
+                    const option = document.createElement('option');
+                    option.value = member.id;
+                    option.textContent = member.name;
+                    if (member.id === currentValue) {
+                        option.selected = true;
+                    }
+                    filterMember.appendChild(option);
+                });
+            }
+            
+            updateRelatedTasksIfModalOpen() {
+                const modal = document.getElementById('task-modal');
+                if (modal && !modal.classList.contains('hidden')) {
+                    // 現在編集中のタスクIDを取得
+                    const currentTaskId = this.currentEditingTask ? this.currentEditingTask.id : null;
+                    // 現在選択されている関連タスクIDを取得
+                    const select = document.getElementById('task-related-tasks');
+                    const selectedTaskIds = select ? Array.from(select.selectedOptions).map(opt => opt.value) : [];
+                    // 関連タスクの選択肢を更新
+                    setTimeout(() => {
+                        this.populateRelatedTasksSelect(currentTaskId, selectedTaskIds);
+                    }, 50);
+                }
+            }
+            
             renderTasks() {
                 const container = document.getElementById('tasks-container');
                 const searchTerm = document.getElementById('search-input').value.toLowerCase();
                 const statusFilter = document.getElementById('filter-status').value;
                 const priorityFilter = document.getElementById('filter-priority').value;
                 const clientFilter = document.getElementById('filter-client').value;
+                const memberFilter = document.getElementById('filter-member') ? document.getElementById('filter-member').value : '';
                 
                 let filteredTasks = this.tasks.filter(task => {
                     const matchSearch = task.title.toLowerCase().includes(searchTerm) || 
@@ -6666,6 +9046,9 @@
                             // 通常の個別ステータス
                             matchStatus = task.status === statusFilter;
                         }
+                    } else {
+                        // 「全ステータス」が選択されている場合: 全てのタスクを表示（完了タスクも含む）
+                        matchStatus = true;
                     }
                     
                     const matchPriority = !priorityFilter || task.priority === priorityFilter;
@@ -6682,7 +9065,10 @@
                         }
                     }
                     
-                    return matchSearch && matchStatus && matchPriority && matchClient;
+                    // 担当者フィルターの処理
+                    const matchMember = !memberFilter || task.member_id === memberFilter;
+                    
+                    return matchSearch && matchStatus && matchPriority && matchClient && matchMember;
                 });
                 
                 // 期限と優先度でソート
@@ -6718,6 +9104,7 @@
                 card.className = 'task-item bg-white rounded-lg shadow-sm border border-gray-200 p-3 hover:shadow-md transition-shadow';
                 
                 const client = task.client_id ? this.clients.find(c => c.id === task.client_id) : null;
+                const member = task.member_id ? this.members.find(m => m.id === task.member_id) : null;
                 const taskSubtasks = this.subtasks.filter(st => st.parent_task_id === task.id);
                 const completedSubtasks = taskSubtasks.filter(st => st.completed);
                 
@@ -6779,6 +9166,7 @@
                         <div class="task-content flex-1 min-w-0">
                             <h3 class="task-title text-lg font-semibold text-gray-900 ${task.status === 'completed' ? 'line-through' : ''}">${task.title}</h3>
                             ${client ? `<p class="task-client text-blue-600 text-sm mt-1"><i class="fas fa-user mr-1"></i>${client.name}${client.company ? ` (${client.company})` : ''}</p>` : ''}
+                            ${member ? `<p class="task-member text-purple-600 text-sm mt-1"><i class="fas fa-user-tie mr-1"></i>${member.name}</p>` : ''}
                             
                             <div class="task-meta">
                                 <span class="task-status inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${statusClass[task.status]}">
@@ -7090,6 +9478,9 @@
                             // 通常の個別ステータス
                             matchStatus = task.status === statusFilter;
                         }
+                    } else {
+                        // 「全ステータス」が選択されている場合: 全てのタスクを表示（完了タスクも含む）
+                        matchStatus = true;
                     }
                     
                     const matches = matchSearch && matchClient && matchStatus;
@@ -7252,39 +9643,91 @@
                     
                     // 日付比較用に正規化した日付を作成（時刻を除去）
                     const startDateOnly = new Date(taskStartDate.getFullYear(), taskStartDate.getMonth(), taskStartDate.getDate());
+                    startDateOnly.setHours(0, 0, 0, 0);
                     const endDateOnly = new Date(taskEndDate.getFullYear(), taskEndDate.getMonth(), taskEndDate.getDate());
+                    endDateOnly.setHours(0, 0, 0, 0);
                     
-                    console.log(`📅 タスク "${task.title}" - 開始: ${startDateOnly.toISOString().split('T')[0]}, 終了: ${endDateOnly.toISOString().split('T')[0]}`);
+                    // 開始日時が期日を超えているかチェック（日付のみで比較）
+                    // 開始日時が期日と同じ日で、時刻が期日を超えている場合は「超えている」とみなさない
+                    // 開始日時の日付が期日の日付より後である場合のみ「超えている」とみなす
+                    const isStartAfterDeadline = startDateOnly.getTime() > endDateOnly.getTime();
+                    
+                    // 遅れ日数を計算（開始日時が期日を超えている場合）
+                    let overdueDays = 0;
+                    if (isStartAfterDeadline) {
+                        overdueDays = Math.round((startDateOnly.getTime() - endDateOnly.getTime()) / (1000 * 60 * 60 * 24));
+                    }
+                    
+                    // 表示用の日付範囲を決定
+                    // 開始日時が期日を超えている場合：期日から開始日時までを表示（遅れ日数が見た目でわかるように）
+                    // 開始日時が期日を超えていない場合：開始日時から期日までを表示（通常の表示）
+                    const displayStartDate = isStartAfterDeadline ? endDateOnly : startDateOnly;
+                    const displayEndDate = isStartAfterDeadline ? startDateOnly : endDateOnly;
+                    
+                    console.log(`📅 タスク "${task.title}" - 開始: ${startDateOnly.toISOString().split('T')[0]}, 終了: ${endDateOnly.toISOString().split('T')[0]}, 開始日が期日を超えている: ${isStartAfterDeadline}, 遅れ日数: ${overdueDays}日`);
+                    console.log(`   - taskStartDate: ${taskStartDate.toISOString()}, taskEndDate: ${taskEndDate.toISOString()}`);
+                    console.log(`   - startDateOnly: ${startDateOnly.toISOString()}, endDateOnly: ${endDateOnly.toISOString()}`);
+                    console.log(`   - displayStartDate: ${displayStartDate.toISOString()}, displayEndDate: ${displayEndDate.toISOString()}`);
                     
                     // メインタスクバー
                     ganttHTML += `<div class="gantt-row" style="width: ${totalWidth}px; display: flex; height: 48px; align-items: center;">`;
                     
                     for (let day = 1; day <= daysInMonth; day++) {
                         const currentDate = new Date(year, month, day);
+                        // 時刻を0にリセットして日付のみで比較
+                        const currentDateOnly = new Date(year, month, day);
+                        currentDateOnly.setHours(0, 0, 0, 0);
                         
-                        // デバッグ: 日付比較の詳細をログ出力
-                        if (task.title.includes('ストライプ') && (day === 17 || day === 18)) {
-                            console.log(`🔍 ストライプタスク - ${day}日目`);
-                            console.log(`  現在の日付: ${currentDate.toISOString().split('T')[0]}`);
-                            console.log(`  開始日: ${startDateOnly.toISOString().split('T')[0]}`);
-                            console.log(`  終了日: ${endDateOnly.toISOString().split('T')[0]}`);
-                            console.log(`  タスク対象日?: ${currentDate >= startDateOnly && currentDate <= endDateOnly}`);
+                        // デバッグ: 日付比較の詳細をログ出力（12月6日と7日の場合）
+                        if ((endDateOnly.getFullYear() === 2025 && endDateOnly.getMonth() === 11 && endDateOnly.getDate() === 6) && (day === 6 || day === 7)) {
+                            console.log(`🔍 デバッグ - ${day}日目`);
+                            console.log(`  現在の日付: ${currentDateOnly.toISOString()}, getTime(): ${currentDateOnly.getTime()}`);
+                            console.log(`  開始日: ${startDateOnly.toISOString()}, getTime(): ${startDateOnly.getTime()}`);
+                            console.log(`  終了日: ${endDateOnly.toISOString()}, getTime(): ${endDateOnly.getTime()}`);
+                            console.log(`  表示開始日: ${displayStartDate.toISOString()}, getTime(): ${displayStartDate.getTime()}`);
+                            console.log(`  表示終了日: ${displayEndDate.toISOString()}, getTime(): ${displayEndDate.getTime()}`);
+                            console.log(`  比較: ${currentDateOnly.getTime()} >= ${displayStartDate.getTime()} && ${currentDateOnly.getTime()} <= ${displayEndDate.getTime()}`);
+                            console.log(`  タスク対象日?: ${currentDateOnly.getTime() >= displayStartDate.getTime() && currentDateOnly.getTime() <= displayEndDate.getTime()}`);
                         }
                         
-                        // 正確な日付比較（時刻を除いた日付のみ）
-                        const isTaskDay = currentDate >= startDateOnly && currentDate <= endDateOnly;
+                        // 正確な日付比較（時刻を除いた日付のみ、開始日と終了日が同じ場合も含む）
+                        // 開始日時が期日を超えている場合：期日から開始日時までを表示（遅れ日数が見た目でわかるように）
+                        const isTaskDay = currentDateOnly.getTime() >= displayStartDate.getTime() && currentDateOnly.getTime() <= displayEndDate.getTime();
                         
                         if (isTaskDay) {
-                            const isStart = currentDate.getTime() === startDateOnly.getTime();
-                            const isEnd = currentDate.getTime() === endDateOnly.getTime();
+                            const isStart = currentDateOnly.getTime() === startDateOnly.getTime();
+                            const isDeadline = currentDateOnly.getTime() === endDateOnly.getTime();
+                            const isBetweenDeadlineAndStart = isStartAfterDeadline && !isStart && !isDeadline;
+                            const isOverdueStart = isStartAfterDeadline && isStart;
+                            const isOverdueDeadline = isStartAfterDeadline && isDeadline;
+                            
                             const priorityClass = task.priority === 'high' ? 'high-priority' : '';
                             const completedClass = task.status === 'completed' ? 'completed' : '';
+                            const overdueClass = (isOverdueStart || isOverdueDeadline || isBetweenDeadlineAndStart) ? 'overdue-warning' : '';
                             
                             // タスクバーの表示内容と角丸スタイルを決定
                             let barContent = '';
                             let borderRadiusStyle = '';
+                            let barStyle = '';
                             
-                            if (isStart && isEnd) {
+                            if (isStartAfterDeadline) {
+                                if (isDeadline) {
+                                    // 期日の日：左端のみ角丸、赤い点線スタイル
+                                    barContent = '';
+                                    borderRadiusStyle = 'border-top-left-radius: 3px; border-bottom-left-radius: 3px;';
+                                    barStyle = 'background: repeating-linear-gradient(45deg, #fee2e2, #fee2e2 4px, #fecaca 4px, #fecaca 8px); border: 2px dashed #dc2626; border-right: none;';
+                                } else if (isStart) {
+                                    // 開始日時の日：右端のみ角丸、警告スタイル
+                                    barContent = overdueDays > 0 ? `${overdueDays}日` : '';
+                                    borderRadiusStyle = 'border-top-right-radius: 3px; border-bottom-right-radius: 3px;';
+                                    barStyle = 'background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 2px solid #f59e0b; border-left: none;';
+                                } else {
+                                    // 期日と開始日時の間の日：ストライプパターンで遅れ日数を視覚化
+                                    barContent = '';
+                                    borderRadiusStyle = '';
+                                    barStyle = 'background: repeating-linear-gradient(45deg, #fef3c7, #fef3c7 4px, #fde68a 4px, #fde68a 8px); border-top: 2px solid #f59e0b; border-bottom: 2px solid #f59e0b; border-left: none; border-right: none;';
+                                }
+                            } else if (isStart && isDeadline) {
                                 // 1日だけのタスク - 両端角丸
                                 barContent = task.title.substring(0, 4) + (task.title.length > 4 ? '..' : '');
                                 borderRadiusStyle = 'border-radius: 3px;';
@@ -7292,7 +9735,7 @@
                                 // 開始日 - 左端のみ角丸
                                 barContent = task.title.substring(0, 3) + (task.title.length > 3 ? '..' : '');
                                 borderRadiusStyle = 'border-top-left-radius: 3px; border-bottom-left-radius: 3px;';
-                            } else if (isEnd) {
+                            } else if (isDeadline) {
                                 // 終了日 - 右端のみ角丸
                                 barContent = '▶';
                                 borderRadiusStyle = 'border-top-right-radius: 3px; border-bottom-right-radius: 3px;';
@@ -7301,12 +9744,27 @@
                                 barContent = '';
                             }
                             
+                            const titleText = isStartAfterDeadline 
+                                ? `${task.title} (開始: ${startDateOnly.toLocaleDateString()}, 期日: ${endDateOnly.toLocaleDateString()}) ⚠️ 開始日時が期日を${overdueDays}日超えています`
+                                : `${task.title} (開始: ${startDateOnly.toLocaleDateString()}, 終了: ${endDateOnly.toLocaleDateString()})`;
+                            
+                            // 開始日と終了日の情報を追加（ドラッグ位置の判定用）
+                            const isStartDay = isStart;
+                            const isEndDay = isDeadline;
+                            
                             ganttHTML += `
                                 <div class="gantt-day-column" style="min-width: 40px; width: 40px; max-width: 40px; flex: 0 0 40px; padding: 0; box-sizing: border-box; border-right: 1px solid #e5e7eb;">
-                                    <div class="gantt-task-bar ${priorityClass} ${completedClass}" 
-                                         style="${borderRadiusStyle}"
-                                         title="${task.title} (開始: ${startDateOnly.toLocaleDateString()}, 終了: ${endDateOnly.toLocaleDateString()})" 
-                                         onclick="app.openTaskModal(app.tasks.find(t => t.id === '${task.id}'))">
+                                    <div class="gantt-task-bar ${priorityClass} ${completedClass} ${overdueClass}" 
+                                         style="${borderRadiusStyle} ${barStyle} cursor: move; user-select: none;"
+                                         draggable="true"
+                                         data-task-id="${task.id}"
+                                         data-day="${day}"
+                                         data-is-start="${isStartDay}"
+                                         data-is-end="${isEndDay}"
+                                         data-task-start-day="${startDateOnly.getDate()}"
+                                         data-task-end-day="${endDateOnly.getDate()}"
+                                         title="${titleText}${task.related_tasks && task.related_tasks.length > 0 ? ' [関連タスクあり]' : ''}" 
+                                         ondblclick="app.openTaskModal(app.tasks.find(t => t.id === '${task.id}'))">
                                         ${barContent}
                                     </div>
                                 </div>
@@ -7382,7 +9840,452 @@
                 // スクロール連動を設定
                 this.setupGanttScrollSync();
                 
-
+                // ドラッグ&ドロップ機能を設定
+                this.setupGanttDragAndDrop();
+            }
+            
+            setupGanttDragAndDrop() {
+                // ドラッグ状態を保持する変数（関数スコープ外で共有）
+                if (!this.ganttDragState) {
+                    this.ganttDragState = {
+                        draggedTaskId: null,
+                        draggedDay: null,
+                        dragOffset: 0,
+                        isDraggingStart: false, // 開始日をドラッグしているか
+                        isDraggingEnd: false    // 終了日をドラッグしているか
+                    };
+                }
+                
+                const taskBars = document.querySelectorAll('.gantt-task-bar[draggable="true"]');
+                
+                taskBars.forEach(bar => {
+                    bar.addEventListener('dragstart', (e) => {
+                        this.ganttDragState.draggedTaskId = bar.dataset.taskId;
+                        this.ganttDragState.draggedDay = parseInt(bar.dataset.day);
+                        
+                        // ドラッグ開始位置が開始日か終了日かを判定
+                        const isStart = bar.dataset.isStart === 'true';
+                        const isEnd = bar.dataset.isEnd === 'true';
+                        this.ganttDragState.isDraggingStart = isStart;
+                        this.ganttDragState.isDraggingEnd = isEnd;
+                        
+                        const task = this.tasks.find(t => t.id === this.ganttDragState.draggedTaskId);
+                        if (task) {
+                            const taskStartDate = task.scheduled_date ? new Date(task.scheduled_date) : new Date(task.deadline);
+                            const year = this.ganttCurrentDate.getFullYear();
+                            const month = this.ganttCurrentDate.getMonth();
+                            const currentDate = new Date(year, month, this.ganttDragState.draggedDay);
+                            
+                            // ドラッグ開始位置とタスク開始日の差を計算
+                            this.ganttDragState.dragOffset = Math.floor((currentDate - taskStartDate) / (1000 * 60 * 60 * 24));
+                            
+                            console.log('🎯 ドラッグ開始:', {
+                                taskId: this.ganttDragState.draggedTaskId,
+                                day: this.ganttDragState.draggedDay,
+                                isStart: isStart,
+                                isEnd: isEnd,
+                                dragMode: isStart ? '開始日時変更' : (isEnd ? '期日変更' : '全体移動')
+                            });
+                            
+                            e.dataTransfer.effectAllowed = 'move';
+                            e.dataTransfer.setData('text/plain', this.ganttDragState.draggedTaskId);
+                            bar.style.opacity = '0.5';
+                        }
+                    });
+                    
+                    bar.addEventListener('dragend', (e) => {
+                        bar.style.opacity = '1';
+                        this.ganttDragState.draggedTaskId = null;
+                        this.ganttDragState.draggedDay = null;
+                        this.ganttDragState.dragOffset = 0;
+                        this.ganttDragState.isDraggingStart = false;
+                        this.ganttDragState.isDraggingEnd = false;
+                    });
+                    
+                    bar.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                    });
+                    
+                    bar.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        
+                        const targetTaskId = bar.dataset.taskId;
+                        const targetDay = parseInt(bar.dataset.day);
+                        
+                        if (this.ganttDragState.draggedTaskId && this.ganttDragState.draggedTaskId === targetTaskId) {
+                            this.updateTaskDeadlineByDrag(this.ganttDragState.draggedTaskId, targetDay, this.ganttDragState.dragOffset);
+                        }
+                    });
+                });
+                
+                // 日付列にもドロップ可能にする
+                const dayColumns = document.querySelectorAll('.gantt-day-column');
+                dayColumns.forEach(column => {
+                    column.addEventListener('dragover', (e) => {
+                        e.preventDefault();
+                        e.dataTransfer.dropEffect = 'move';
+                        column.style.backgroundColor = 'rgba(59, 130, 246, 0.1)';
+                    });
+                    
+                    column.addEventListener('dragleave', (e) => {
+                        column.style.backgroundColor = '';
+                    });
+                    
+                    column.addEventListener('drop', (e) => {
+                        e.preventDefault();
+                        column.style.backgroundColor = '';
+                        
+                        if (this.ganttDragState.draggedTaskId) {
+                            const dayIndex = Array.from(column.parentElement.children).indexOf(column);
+                            this.updateTaskDeadlineByDrag(this.ganttDragState.draggedTaskId, dayIndex + 1, this.ganttDragState.dragOffset);
+                        }
+                    });
+                });
+            }
+            
+            updateTaskDeadlineByDrag(taskId, targetDay, dragOffset) {
+                const task = this.tasks.find(t => t.id === taskId);
+                if (!task) return;
+                
+                const year = this.ganttCurrentDate.getFullYear();
+                const month = this.ganttCurrentDate.getMonth();
+                
+                // タスクの開始日と終了日を取得
+                // task.deadlineは文字列形式（YYYY-MM-DD）なので、タイムゾーンの影響を受けないように文字列から直接パース
+                let oldStartDate;
+                let oldEndDate;
+                
+                // 期日を文字列から直接パース（タイムゾーンの影響を避ける）
+                if (task.deadline && /^\d{4}-\d{2}-\d{2}$/.test(task.deadline)) {
+                    const deadlineParts = task.deadline.split('-');
+                    oldEndDate = new Date(parseInt(deadlineParts[0]), parseInt(deadlineParts[1]) - 1, parseInt(deadlineParts[2]));
+                    oldEndDate.setHours(0, 0, 0, 0);
+                } else {
+                    oldEndDate = new Date(task.deadline);
+                    oldEndDate.setHours(0, 0, 0, 0);
+                }
+                
+                if (task.scheduled_date) {
+                    // 開始日時が設定されている場合
+                    oldStartDate = new Date(task.scheduled_date);
+                } else {
+                    // 開始日時が設定されていない場合、期日と同じ日付にする
+                    oldStartDate = new Date(oldEndDate);
+                }
+                
+                // 開始日と終了日の時刻を0にリセットしてから間隔（ミリ秒）を計算
+                const oldStartDateOnly = new Date(oldStartDate.getFullYear(), oldStartDate.getMonth(), oldStartDate.getDate());
+                oldStartDateOnly.setHours(0, 0, 0, 0);
+                const oldEndDateOnly = new Date(oldEndDate.getFullYear(), oldEndDate.getMonth(), oldEndDate.getDate());
+                oldEndDateOnly.setHours(0, 0, 0, 0);
+                
+                // 日数の差分を正確に計算（ミリ秒単位で計算）
+                const durationMs = oldEndDateOnly.getTime() - oldStartDateOnly.getTime();
+                const duration = Math.round(durationMs / (1000 * 60 * 60 * 24));
+                
+                console.log('🔍 ドラッグ更新:', {
+                    taskTitle: task.title,
+                    oldStartDate: oldStartDateOnly.toISOString().split('T')[0],
+                    oldEndDate: oldEndDateOnly.toISOString().split('T')[0],
+                    duration: duration,
+                    durationMs: durationMs,
+                    targetDay: targetDay,
+                    dragOffset: dragOffset
+                });
+                
+                // ドラッグ開始時のタスクバーの位置（日）を取得
+                const dragStartDay = this.ganttDragState.draggedDay;
+                
+                // タスクの開始日が現在表示されている月の何日目かを計算
+                let taskStartDayInMonth;
+                if (oldStartDateOnly.getFullYear() === year && oldStartDateOnly.getMonth() === month) {
+                    taskStartDayInMonth = oldStartDateOnly.getDate();
+                } else {
+                    // タスクの開始日が現在の月にない場合、ドラッグ開始位置を基準にする
+                    taskStartDayInMonth = dragStartDay;
+                }
+                
+                // ドラッグ開始位置とタスク開始日の差を計算
+                const offsetFromStart = dragStartDay - taskStartDayInMonth;
+                
+                // 移動量を計算（関連タスク用）- スコープを広げるため、if-elseの前に定義
+                let dayDiff;
+                let deadlineChanged = false; // メインタスクの期日が変更されたかどうか（関連タスクの処理でも使用）
+                
+                // 開始日時が設定されているかどうかで処理を分岐
+                if (task.scheduled_date) {
+                    // 開始日時が設定されている場合
+                    const hasDuration = duration > 0; // 開始日時と期日に間隔があるか
+                    const isDraggingStart = this.ganttDragState.isDraggingStart && hasDuration;
+                    const isDraggingEnd = this.ganttDragState.isDraggingEnd && hasDuration;
+                    
+                    if (isDraggingEnd) {
+                        // 終了日（期日）をドラッグしている場合：期日のみを変更
+                        const newEndDate = new Date(year, month, targetDay);
+                        newEndDate.setHours(0, 0, 0, 0);
+                        
+                        // 新しい期日が開始日時より前にならないようにする
+                        if (newEndDate.getTime() < oldStartDateOnly.getTime()) {
+                            // 期日が開始日時より前になる場合は、開始日時と同じ日付にする
+                            const newEndDateOnly = new Date(oldStartDateOnly);
+                            const year = newEndDateOnly.getFullYear();
+                            const month = String(newEndDateOnly.getMonth() + 1).padStart(2, '0');
+                            const day = String(newEndDateOnly.getDate()).padStart(2, '0');
+                            task.deadline = `${year}-${month}-${day}`;
+                            deadlineChanged = true;
+                        } else {
+                            // 期日を更新
+                            const year = newEndDate.getFullYear();
+                            const month = String(newEndDate.getMonth() + 1).padStart(2, '0');
+                            const day = String(newEndDate.getDate()).padStart(2, '0');
+                            task.deadline = `${year}-${month}-${day}`;
+                            deadlineChanged = true;
+                        }
+                        
+                        // 移動量を計算（関連タスク用）- 期日の移動量
+                        let taskEndDayInMonth;
+                        if (oldEndDateOnly.getFullYear() === year && oldEndDateOnly.getMonth() === month) {
+                            taskEndDayInMonth = oldEndDateOnly.getDate();
+                        } else {
+                            taskEndDayInMonth = dragStartDay;
+                        }
+                        dayDiff = targetDay - taskEndDayInMonth;
+                        
+                        console.log('✅ 更新後（期日変更）:', {
+                            dragStartDay: dragStartDay,
+                            taskEndDayInMonth: taskEndDayInMonth,
+                            targetDay: targetDay,
+                            dayDiff: dayDiff,
+                            oldEndDate: oldEndDateOnly.toISOString().split('T')[0],
+                            newEndDate: task.deadline,
+                            note: '期日のみ変更されました'
+                        });
+                    } else {
+                        // 開始日時をドラッグしている場合、または間隔がない場合：開始日時を変更し、期日は条件付きで変更
+                        const newStartDate = new Date(year, month, targetDay);
+                        newStartDate.setHours(0, 0, 0, 0);
+                        
+                        // 開始日時の時刻を維持
+                        const oldStartDateTime = new Date(task.scheduled_date);
+                        const hours = oldStartDateTime.getHours();
+                        const minutes = oldStartDateTime.getMinutes();
+                        const seconds = oldStartDateTime.getSeconds();
+                        newStartDate.setHours(hours, minutes, seconds, 0);
+                        
+                        // 新しい開始日時が期日を超えるかチェック
+                        const newStartDateOnly = new Date(newStartDate.getFullYear(), newStartDate.getMonth(), newStartDate.getDate());
+                        newStartDateOnly.setHours(0, 0, 0, 0);
+                        
+                        let newEndDate;
+                        
+                        if (newStartDateOnly.getTime() > oldEndDateOnly.getTime()) {
+                            // 新しい開始日時が期日を超える場合、期日も新しい開始日時に合わせて変更
+                            newEndDate = newStartDateOnly;
+                            deadlineChanged = true;
+                        } else {
+                            // 新しい開始日時が期日を超えない場合、期日は変更しない
+                            newEndDate = oldEndDateOnly;
+                        }
+                        
+                        // 移動量を計算（関連タスク用）
+                        dayDiff = targetDay - taskStartDayInMonth;
+                        
+                        console.log('✅ 更新後（開始日時変更）:', {
+                            dragStartDay: dragStartDay,
+                            taskStartDayInMonth: taskStartDayInMonth,
+                            offsetFromStart: offsetFromStart,
+                            targetDay: targetDay,
+                            dayDiff: dayDiff,
+                            newStartDate: newStartDate.toISOString().split('T')[0],
+                            oldEndDate: oldEndDateOnly.toISOString().split('T')[0],
+                            newEndDate: newEndDate.toISOString().split('T')[0],
+                            deadlineChanged: deadlineChanged,
+                            note: deadlineChanged ? '期日も変更されました（開始日時が期日を超えたため）' : '期日は変更されません'
+                        });
+                        
+                        // 開始日時を更新（日本時間として保存）
+                        task.scheduled_date = newStartDate.toISOString();
+                        
+                        // 期日を更新
+                        if (deadlineChanged) {
+                            // 期日が変更される場合：新しい日付を文字列形式で保存（タイムゾーンの影響を避ける）
+                            newEndDate.setHours(0, 0, 0, 0);
+                            const year = newEndDate.getFullYear();
+                            const month = String(newEndDate.getMonth() + 1).padStart(2, '0');
+                            const day = String(newEndDate.getDate()).padStart(2, '0');
+                            task.deadline = `${year}-${month}-${day}`;
+                            console.log(`  期日を変更: ${task.deadline}`);
+                        } else {
+                            // 期日が変更されない場合：元の文字列をそのまま維持（タイムゾーンの影響を避ける）
+                            // task.deadlineは変更しない
+                            console.log(`  期日は変更されません（元の値: ${task.deadline}）`);
+                        }
+                    }
+                } else {
+                    // 開始日時が設定されていない場合：期日のみを変更（開始日時は設定しない）
+                    const newEndDate = new Date(year, month, targetDay);
+                    newEndDate.setHours(0, 0, 0, 0);
+                    
+                    // 移動量を計算（関連タスク用）
+                    // 開始日時がない場合、期日の位置を基準にする
+                    let taskDeadlineDayInMonth;
+                    if (oldEndDateOnly.getFullYear() === year && oldEndDateOnly.getMonth() === month) {
+                        taskDeadlineDayInMonth = oldEndDateOnly.getDate();
+                    } else {
+                        // 期日が現在の月にない場合、ドラッグ開始位置を基準にする
+                        taskDeadlineDayInMonth = dragStartDay;
+                    }
+                    dayDiff = targetDay - taskDeadlineDayInMonth;
+                    
+                    console.log('✅ 更新後（開始日時なし）:', {
+                        dragStartDay: dragStartDay,
+                        taskDeadlineDayInMonth: taskDeadlineDayInMonth,
+                        targetDay: targetDay,
+                        dayDiff: dayDiff,
+                        oldEndDate: oldEndDateOnly.toISOString().split('T')[0],
+                        newEndDate: newEndDate.toISOString().split('T')[0],
+                        note: '開始日時は設定されず、期日のみ変更されます'
+                    });
+                    
+                    // 期日のみを更新（開始日時は設定しない）
+                    task.deadline = newEndDate.toISOString().split('T')[0];
+                    // scheduled_dateはnullのまま（設定しない）
+                }
+                
+                task.updated_at = new Date().toISOString();
+                
+                // 関連タスクも一緒にずらす
+                if (task.related_tasks && task.related_tasks.length > 0) {
+                    // メインタスクのドラッグモードを判定
+                    const isMainTaskDraggingStart = this.ganttDragState.isDraggingStart && task.scheduled_date && duration > 0;
+                    const isMainTaskDraggingEnd = this.ganttDragState.isDraggingEnd && task.scheduled_date && duration > 0;
+                    
+                    console.log('🔄 関連タスク更新:', {
+                        mainTaskId: task.id,
+                        mainTaskTitle: task.title,
+                        isMainTaskDraggingStart: isMainTaskDraggingStart,
+                        isMainTaskDraggingEnd: isMainTaskDraggingEnd,
+                        dayDiff: dayDiff,
+                        relatedTasksCount: task.related_tasks.length
+                    });
+                    
+                    task.related_tasks.forEach(relatedTaskId => {
+                        const relatedTask = this.tasks.find(t => t.id === relatedTaskId);
+                        if (relatedTask) {
+                            if (isMainTaskDraggingEnd) {
+                                // メインタスクが期日変更の場合：関連タスクも期日のみを変更
+                                const relatedOldEndDate = new Date(relatedTask.deadline);
+                                relatedOldEndDate.setHours(0, 0, 0, 0);
+                                
+                                const relatedOldEndDateOnly = new Date(relatedOldEndDate.getFullYear(), relatedOldEndDate.getMonth(), relatedOldEndDate.getDate());
+                                relatedOldEndDateOnly.setHours(0, 0, 0, 0);
+                                
+                                // 新しい期日を計算（ミリ秒単位で移動）
+                                const relatedNewEndDate = new Date(relatedOldEndDateOnly.getTime() + (dayDiff * 24 * 60 * 60 * 1000));
+                                relatedNewEndDate.setHours(0, 0, 0, 0);
+                                
+                                // 新しい期日が開始日時より前にならないようにする
+                                if (relatedTask.scheduled_date) {
+                                    const relatedOldStartDate = new Date(relatedTask.scheduled_date);
+                                    const relatedOldStartDateOnly = new Date(relatedOldStartDate.getFullYear(), relatedOldStartDate.getMonth(), relatedOldStartDate.getDate());
+                                    relatedOldStartDateOnly.setHours(0, 0, 0, 0);
+                                    
+                                    if (relatedNewEndDate.getTime() < relatedOldStartDateOnly.getTime()) {
+                                        // 期日が開始日時より前になる場合は、開始日時と同じ日付にする
+                                        const year = relatedOldStartDateOnly.getFullYear();
+                                        const month = String(relatedOldStartDateOnly.getMonth() + 1).padStart(2, '0');
+                                        const day = String(relatedOldStartDateOnly.getDate()).padStart(2, '0');
+                                        relatedTask.deadline = `${year}-${month}-${day}`;
+                                    } else {
+                                        // 期日を更新
+                                        const year = relatedNewEndDate.getFullYear();
+                                        const month = String(relatedNewEndDate.getMonth() + 1).padStart(2, '0');
+                                        const day = String(relatedNewEndDate.getDate()).padStart(2, '0');
+                                        relatedTask.deadline = `${year}-${month}-${day}`;
+                                    }
+                                } else {
+                                    // 開始日時がない場合：期日を更新
+                                    const year = relatedNewEndDate.getFullYear();
+                                    const month = String(relatedNewEndDate.getMonth() + 1).padStart(2, '0');
+                                    const day = String(relatedNewEndDate.getDate()).padStart(2, '0');
+                                    relatedTask.deadline = `${year}-${month}-${day}`;
+                                }
+                                
+                                console.log(`  ✅ 関連タスク "${relatedTask.title}" の期日を変更: ${relatedTask.deadline}`);
+                            } else if (isMainTaskDraggingStart || (!isMainTaskDraggingStart && !isMainTaskDraggingEnd)) {
+                                // メインタスクが開始日時変更の場合、または間隔がない場合：関連タスクも開始日時を変更
+                                if (relatedTask.scheduled_date) {
+                                    // 関連タスクに開始日時が設定されている場合：開始日時を変更し、期日は条件付きで変更
+                                    const relatedOldStartDate = new Date(relatedTask.scheduled_date);
+                                    const relatedOldEndDate = new Date(relatedTask.deadline);
+                                    relatedOldEndDate.setHours(0, 0, 0, 0);
+                                    
+                                    const relatedOldStartDateOnly = new Date(relatedOldStartDate.getFullYear(), relatedOldStartDate.getMonth(), relatedOldStartDate.getDate());
+                                    relatedOldStartDateOnly.setHours(0, 0, 0, 0);
+                                    const relatedOldEndDateOnly = new Date(relatedOldEndDate.getFullYear(), relatedOldEndDate.getMonth(), relatedOldEndDate.getDate());
+                                    relatedOldEndDateOnly.setHours(0, 0, 0, 0);
+                                    
+                                    // 新しい開始日を計算（ミリ秒単位で移動）
+                                    let relatedNewStartDate = new Date(relatedOldStartDateOnly.getTime() + (dayDiff * 24 * 60 * 60 * 1000));
+                                    
+                                    // 開始日時の時刻を維持
+                                    const hours = relatedOldStartDate.getHours();
+                                    const minutes = relatedOldStartDate.getMinutes();
+                                    const seconds = relatedOldStartDate.getSeconds();
+                                    relatedNewStartDate.setHours(hours, minutes, seconds, 0);
+                                    
+                                    // 新しい開始日時が期日を超えるかチェック
+                                    const relatedNewStartDateOnly = new Date(relatedNewStartDate.getFullYear(), relatedNewStartDate.getMonth(), relatedNewStartDate.getDate());
+                                    relatedNewStartDateOnly.setHours(0, 0, 0, 0);
+                                    
+                                    // 開始日時を更新
+                                    relatedTask.scheduled_date = relatedNewStartDate.toISOString();
+                                    
+                                    // 期日を更新（メインタスクと同じロジック）
+                                    if (relatedNewStartDateOnly.getTime() > relatedOldEndDateOnly.getTime()) {
+                                        // 新しい開始日時が期日を超える場合、期日も新しい開始日時に合わせて変更
+                                        const relatedNewEndDate = relatedNewStartDateOnly;
+                                        relatedNewEndDate.setHours(0, 0, 0, 0);
+                                        const year = relatedNewEndDate.getFullYear();
+                                        const month = String(relatedNewEndDate.getMonth() + 1).padStart(2, '0');
+                                        const day = String(relatedNewEndDate.getDate()).padStart(2, '0');
+                                        relatedTask.deadline = `${year}-${month}-${day}`;
+                                        console.log(`  ✅ 関連タスク "${relatedTask.title}" の開始日時と期日を変更`);
+                                    } else {
+                                        // 新しい開始日時が期日を超えない場合、期日は変更しない
+                                        // relatedTask.deadlineは変更しない
+                                        console.log(`  ✅ 関連タスク "${relatedTask.title}" の開始日時を変更（期日は変更なし）`);
+                                    }
+                                } else {
+                                    // 関連タスクに開始日時が設定されていない場合：期日のみを変更（開始日時は設定しない）
+                                    const relatedOldEndDate = new Date(relatedTask.deadline);
+                                    relatedOldEndDate.setHours(0, 0, 0, 0);
+                                    
+                                    const relatedOldEndDateOnly = new Date(relatedOldEndDate.getFullYear(), relatedOldEndDate.getMonth(), relatedOldEndDate.getDate());
+                                    relatedOldEndDateOnly.setHours(0, 0, 0, 0);
+                                    
+                                    // 新しい期日を計算（ミリ秒単位で移動）
+                                    const relatedNewEndDate = new Date(relatedOldEndDateOnly.getTime() + (dayDiff * 24 * 60 * 60 * 1000));
+                                    relatedNewEndDate.setHours(0, 0, 0, 0);
+                                    
+                                    // 期日のみを更新（開始日時は設定しない）
+                                    const year = relatedNewEndDate.getFullYear();
+                                    const month = String(relatedNewEndDate.getMonth() + 1).padStart(2, '0');
+                                    const day = String(relatedNewEndDate.getDate()).padStart(2, '0');
+                                    relatedTask.deadline = `${year}-${month}-${day}`;
+                                    console.log(`  ✅ 関連タスク "${relatedTask.title}" の期日を変更（開始日時なし）`);
+                                }
+                            }
+                            
+                            relatedTask.updated_at = new Date().toISOString();
+                        }
+                    });
+                }
+                
+                this.saveData();
+                this.renderGanttChart();
             }
 
             setupGanttScrollSync() {
@@ -8576,6 +11479,7 @@
                 const data = {
                     tasks: this.tasks,
                     clients: this.clients,
+                    members: this.members,
                     subtasks: this.subtasks,
                     timeLogs: this.timeLogs,
                     settings: this.settings,
@@ -8650,6 +11554,7 @@
                                 <strong>プレビュー:</strong><br>
                                 タスク: ${importData.tasks?.length || 0}件、
                                 顧客: ${importData.clients?.length || 0}件、
+                                担当者: ${importData.members?.length || 0}件、
                                 サブタスク: ${importData.subtasks?.length || 0}件
                             </div>
                         </div>
@@ -8689,6 +11594,7 @@
                 let stats = {
                     tasksAdded: 0,
                     clientsAdded: 0,
+                    membersAdded: 0,
                     subtasksAdded: 0,
                     timeLogsAdded: 0,
                     duplicatesSkipped: 0
@@ -8780,13 +11686,16 @@
                 this.loadSettings();
                 this.renderTasks();
                 this.renderClients();
+                this.renderMembers();
+                this.updateAllMemberFilters();
                 
                 // 詳細な結果表示
                 const message = `📈 差分インポート完了！
 
 ✅ 追加されたデータ:
 • タスク: ${stats.tasksAdded}件
-• 顧客: ${stats.clientsAdded}件  
+• 顧客: ${stats.clientsAdded}件
+• 担当者: ${stats.membersAdded}件
 • サブタスク: ${stats.subtasksAdded}件
 • 時間ログ: ${stats.timeLogsAdded}件
 
@@ -8803,6 +11712,7 @@
                 
                 this.tasks = importData.tasks || [];
                 this.clients = importData.clients || [];
+                this.members = importData.members || [];
                 this.subtasks = importData.subtasks || [];
                 this.timeLogs = importData.timeLogs || [];
                 this.settings = importData.settings || {};
@@ -8811,6 +11721,8 @@
                 this.loadSettings();
                 this.renderTasks();
                 this.renderClients();
+                this.renderMembers();
+                this.updateAllMemberFilters();
                 
                 alert('データの完全置き換えが完了しました。');
             }
@@ -8820,12 +11732,14 @@
                     if (confirm('本当によろしいですか？')) {
                         this.tasks = [];
                         this.clients = [];
+                        this.members = [];
                         this.subtasks = [];
                         this.timeLogs = [];
                         this.settings = {};
                         
                         localStorage.removeItem('taskflow_tasks');
                         localStorage.removeItem('taskflow_clients');
+                        localStorage.removeItem('taskflow_members');
                         localStorage.removeItem('taskflow_subtasks');
                         localStorage.removeItem('taskflow_time_logs');
                         localStorage.removeItem('taskflow_settings');
